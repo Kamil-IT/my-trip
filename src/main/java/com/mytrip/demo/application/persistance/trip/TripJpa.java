@@ -38,4 +38,8 @@ public class TripJpa {
     public void addParticipants(UserJpa user) {
         participants.add(user);
     }
+
+    public void removeParticipants(UserJpa user) {
+        participants.remove(user);
+    }
 }

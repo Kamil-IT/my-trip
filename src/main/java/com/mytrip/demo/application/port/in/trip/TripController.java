@@ -41,13 +41,20 @@ public class TripController {
     @PostMapping("/trip")
     public TripJpa addTrip(@Valid CreateTripDto trip) {
 //        From spring security get user
-        return tripService.create(trip, "email");
+        return tripService.createOrUpdate(trip, "email");
     }
 
     @PostMapping("/trip/participant")
     public ResponseEntity<Void> addTripParticipant(@Valid AddEventParticipantDto participant) {
 //        From spring security get user
         tripService.addParticipants(participant.getEventUUID(), participant.getEmail());
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/trip/participant")
+    public ResponseEntity<Void> removeTripParticipant(@Valid RemoveTripParticipantDto participant) {
+//        From spring security get user
+        tripService.deleteParticipant(participant.getTripUUID(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
