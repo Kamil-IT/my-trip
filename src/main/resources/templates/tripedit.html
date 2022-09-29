@@ -16,6 +16,8 @@
 </head>
 <body>
 
+<div th:insert="fragments/navbar :: navbar"></div>
+
 <row-trip class="container">
 
     <div class="d-flex flex-column">
@@ -25,12 +27,12 @@
         <div class="d-flex flex-row">
             <div class="p-2">
                 <label for="uuid">Id:</label>
-                <input th:text="${trip.uuid}" id="uuid" readonly class="form-control"/>
+                <input th:value="${trip.uuid}" id="uuid" readonly class="form-control"/>
             </div>
 
             <div class="p-2">
                 <label for="creatorEmail">Creator:</label>
-                <input th:text="${trip.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
+                <input th:value="${trip.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
             </div>
         </div>
 
@@ -68,6 +70,13 @@
 
         </div>
 
+        <div class="d-flex flex-row">
+            <input th:text="${participantEmail}" class="form-control"/>
+            <form method="delete" th:href="'/trip/participant/' + ${participantEmail}">
+                <button type="submit" class="btn btn-success">add</button>
+            </form>
+        </div>
+
 
         <h5>Events in trip:</h5>
 
@@ -75,12 +84,12 @@
             <div class="d-flex flex-row">
                 <div class="p-2">
                     <label for="uuid">Id:</label>
-                    <input th:text="${event.uuid}" id="uuid" readonly class="form-control"/>
+                    <input th:value="${event.uuid}" id="uuid" readonly class="form-control"/>
                 </div>
 
                 <div class="p-2">
                     <label for="creatorEmail">Creator:</label>
-                    <input th:text="${event.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
+                    <input th:value="${event.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
                 </div>
             </div>
 
@@ -90,6 +99,9 @@
                 <div class="p-2">
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" class="form-control" th:value="${event.title}">
+                </div>
+
+                <div class="p-2">
 
                     <label for="type">Type:</label>
                     <select name="type" id="type">
@@ -133,6 +145,7 @@
                         <tr>
                             <th scope="col">Key</th>
                             <th scope="col">Value</th>
+                            <th scope="col">Save</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -141,31 +154,42 @@
 
                             <tr>
                                 <td>
+                                    <input type="text" id="key" name="key" th:value="${property.key}"
+                                           class="form-control">
+                                </td>
+
+                                <td>
+                                    <input type="text" id="value" name="value" th:value="${property.value}"
+                                           class="form-control">
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-light">Save</button>
+                                </td>
+                            </tr>
+
+                        </form>
+                        <tr>
+                            <form method="post" class="d-flex flex-column">
+
+                                <td>
                                     <input type="text" id="key" name="key" class="form-control">
                                 </td>
 
                                 <td>
                                     <input type="text" id="value" name="value" class="form-control">
                                 </td>
-                            </tr>
 
-                        </form>
-                        <tr>
-
-                            <td>
-                                <input type="text" id="key" name="key" class="form-control">
-                            </td>
-
-                            <td>
-                                <input type="text" id="value" name="value" class="form-control">
-                            </td>
+                                <td>
+                                    <button class="btn btn-light">Save</button>
+                                </td>
+                            </form>
                         </tr>
 
                         </tbody>
 
                     </table>
                 </div>
-
 
             </div>
 
@@ -175,6 +199,8 @@
 
 
 </row-trip>
+
+<div th:insert="fragments/footer :: footer"></div>
 
 </body>
 </html>

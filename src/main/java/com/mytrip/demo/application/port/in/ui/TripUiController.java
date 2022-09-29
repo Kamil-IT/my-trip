@@ -49,7 +49,7 @@ public class TripUiController {
                 .location(Event.LocationDetails.builder().latitude(23d).longitude(45d)
                         .locationDescription("Barcelona").build())
                 .creatorEmail("admin@admin.com").eventType(TripEventTypeName.ACCOMMODATION)
-                .properties(new HashMap<>()).build());
+                .properties(Map.of("test", "test")).build());
         return Trip.builder().uuid(UUID.randomUUID()).title("Trip to barcelona")
                 .creatorEmail("ex@emil.com")
                 .from(LocalDate.now().plusDays(2)).to(LocalDate.now().plusDays(4))
