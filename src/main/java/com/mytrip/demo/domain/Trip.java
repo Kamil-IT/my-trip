@@ -16,5 +16,5 @@ public class Trip {
     LocalDate from;
     LocalDate to;
     List<String> participantsEmails;
-    List<Trip> trips;
+    List<Event> events;
 }

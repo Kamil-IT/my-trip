@@ -3,16 +3,14 @@ package com.mytrip.demo.application.port.in.user;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.port.out.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/v1")
 public class UserController {
 
     private final UserService userService;
@@ -23,8 +21,8 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("/user")
-    public UserJpa getUser(@PathParam("email") String email) {
+    @GetMapping("/user/{email}")
+    public UserJpa getUser(@PathVariable("email") String email) {
         return userService.getById(email);
     }
 

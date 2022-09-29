@@ -1,0 +1,38 @@
+<head>
+    <!--    For development purpose-->
+    <meta charset="UTF-8">
+    <title>My Trip</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+
+    <link rel="stylesheet" href="../../static/css/styles.css"/>
+    <link rel="stylesheet" href="../../static/css/styles-navbar.css"/>
+    <link rel="stylesheet" href="../../static/css/styles-tripedit.css"/>
+</head>
+
+<row-trip th:fragment="triprow" class="container">
+    <div class="row">
+
+        <h2>New trip</h2>
+
+        <div class="w-100"></div>
+        <form action="/trips" method="post" class="new-trip">
+
+            <div class="col-sm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control">
+
+                <label for="from">From:</label>
+                <input type="date" id="from" name="from" class="form-control">
+
+                <label for="to">To:</label>
+                <input type="date" id="to" name="to" class="form-control">
+            </div>
+
+            <input type="submit" value="Create" class="btn btn-light" style="margin-top: 1rem">
+
+
+        </form>
+    </div>
+</row-trip>

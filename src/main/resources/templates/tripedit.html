@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trip</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-triplist.css}"/>
+    <!--    For development purpose-->
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <link rel="stylesheet" href="../static/css/styles-navbar.css"/>
+    <link rel="stylesheet" href="../static/css/styles-triplist.css"/>
+</head>
+<body>
+
+<row-trip class="container">
+
+    <!--  <div class="d-flex flex-row">-->
+    <!--    <div class="p-2">Flex item 1</div>-->
+    <!--    <div class="p-2">Flex item 2</div>-->
+    <!--    <div class="p-2">Flex item 3</div>-->
+    <!--  </div>-->
+    <!--  <div class="d-flex flex-row-reverse">-->
+    <!--    <div class="p-2">Flex item 1</div>-->
+    <!--    <div class="p-2">Flex item 2</div>-->
+    <!--    <div class="p-2">Flex item 3</div>-->
+    <!--  </div>-->
+
+        <!--    <div class="p-2">-->
+        <div class="d-flex flex-row">
+
+            <label for="uuid">Id:</label>
+            <h5 th:text="${trip.uuid}" id="uuid">2a0bd188-e6fc-4454-8162-9fb9ef7704af</h5>
+
+            <label for="creatorEmail">Creator:</label>
+            <h5 th:text="${trip.creatorEmail}" id="creatorEmail">mail@gmail.com</h5>
+        </div>
+        <!--    </div>-->
+
+
+        <div class="w-100"></div>
+        <form action="/trip" method="post" class="new-trip">
+
+            <div class="col-sm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" th:value="${trip.title}">
+
+                <label for="from">From:</label>
+                <input type="date" id="from" name="from" class="form-control" th:value="${trip.from}">
+
+                <label for="to">To:</label>
+                <input type="date" id="to" name="to" class="form-control" th:value="${trip.to}">
+                <br>
+
+                <p>Events in trip:</p>
+                <div th:each="event: ${trip.events}">
+                    <label for="uuid">Id:</label>
+                    <h2 th:text="${event.uuid}" id="uuid"></h2>
+
+                    <label for="creatorEmail">Creator:</label>
+                    <h2 th:text="${event.creatorEmail}" id="creatorEmail"></h2>
+
+                    <!--            https://www.baeldung.com/thymeleaf-enums - TODO-->
+                    <label for="type">Type:</label>
+                    <select name="type" id="type">
+                        <option value="" disabled selected>Choose your option</option>
+                        <!--                Get enum value from java-->
+                        <option value="ACCOMMODATION">ACCOMMODATION</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" th:value="${event.title}">
+
+                    <label for="from">From:</label>
+                    <input type="date" id="from" name="from" class="form-control" th:value="${event.from}">
+
+                    <label for="to">To:</label>
+                    <input type="date" id="to" name="to" class="form-control" th:value="${event.to}">
+
+                    <label for="locationDescription">Location:</label>
+                    <input type="date" id="locationDescription" name="locationDescription" class="form-control"
+                           th:value="${event.location.locationDescription}">
+
+                    <p>Event properties:</p>
+                    <div th:each="property: ${event.properties}">
+
+                        <td th:text="${property.key}">key</td>
+                        <td th:text="${property.value}">value</td>
+
+                    </div>
+                    <form method="post">
+                        <label for="key">Key:</label>
+                        <input type="text" id="key" name="key" class="form-control">
+
+                        <label for="value">Value:</label>
+                        <input type="text" id="value" name="value" class="form-control">
+
+                    </form>
+
+
+                    <br>
+
+                </div>
+
+
+                <p>Participants:</p>
+                <div th:each="participantEmail: ${trip.participantsEmails}">
+                    <div class="row">
+                        <h6 th:text="${participantEmail}"
+                            style="margin-left: 2rem; margin-right: 5px; margin-top: 0.5rem;">mail@ma.com</h6>
+                        <form method="delete" th:href="'/trip/participant/' + ${participantEmail}">
+                            <button type="submit" class="btn btn-danger">remove</button>
+                        </form>
+                        <a th:href="'/trip/event/participant'">
+
+                        </a>
+                    </div>
+                    <br>
+
+                </div>
+            </div>
+
+        </form>
+</row-trip>
+
+</body>
+</html>

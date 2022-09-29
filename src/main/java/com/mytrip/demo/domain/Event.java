@@ -1,6 +1,7 @@
 package com.mytrip.demo.domain;
 
 import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeJpa;
+import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
 import lombok.Builder;
 import lombok.Value;
 
@@ -17,7 +18,7 @@ public class Event {
     LocalDate to;
     LocationDetails location;
     String creatorEmail;
-    TripEventTypeJpa tripEventTypeJpa;
+    TripEventTypeName eventType;
     Map<String, String> properties;
 
     @Value

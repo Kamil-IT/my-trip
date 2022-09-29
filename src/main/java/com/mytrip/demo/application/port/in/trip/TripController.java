@@ -9,9 +9,7 @@ import com.mytrip.demo.application.port.out.TripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -21,6 +19,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/v1")
 public class TripController {
 
     private final TripService tripService;
@@ -28,8 +27,8 @@ public class TripController {
 
 //    Trip
 
-    @GetMapping("/trip")
-    public TripJpa getTrip(@PathParam("id") UUID id) {
+    @GetMapping("/trip/{id}")
+    public TripJpa getTrip(@PathVariable("id") UUID id) {
         return tripService.getById(id);
     }
 

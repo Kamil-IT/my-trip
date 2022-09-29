@@ -6,6 +6,7 @@ import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class TripService {
     }
 
     public TripJpa getById(UUID id){
-        return trips.stream().filter(trip -> trip.getTrip_uuid().equals(id)).findFirst().orElseThrow();
+        return trips.stream().filter(trip -> trip.getUuid().equals(id)).findFirst().orElseThrow();
     }
 
     public TripJpa create(CreateTripDto trip, String email){
@@ -35,7 +36,7 @@ public class TripService {
     }
 
     public void addParticipants(UUID tripUUID, String email) {
-        TripJpa trip = trips.stream().filter(trp -> tripUUID.equals(trp.getTrip_uuid())).findFirst().orElseThrow();
+        TripJpa trip = trips.stream().filter(trp -> tripUUID.equals(trp.getUuid())).findFirst().orElseThrow();
         UserJpa user = userService.getById(email);
         trip.addParticipants(user);
     }

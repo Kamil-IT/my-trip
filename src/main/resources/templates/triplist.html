@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trip</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-triplist.css}"/>
+    <!--    For development purpose-->
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <link rel="stylesheet" href="../static/css/styles-navbar.css"/>
+    <link rel="stylesheet" href="../static/css/styles-triplist.css"/>
+</head>
+<body>
+
+<div th:insert="fragments/navbar :: navbar"></div>
+
+<tr th:each="trip: ${trips}">
+    <td th:text="${trip.title}"/>
+
+    <td>
+
+        <br/>
+        <form action="/trips/events" method="post">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"><br><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location"><br><br>
+
+            <label for="from">From:</label>
+            <input type="date" id="from" name="from"><br><br>
+            <label for="to">To:</label>
+            <input type="date" id="to" name="to"><br><br>
+
+            <!--            https://www.baeldung.com/thymeleaf-enums - TODO-->
+            <label for="type">Type:</label>
+            <select name="type" id="type">
+                <option value="" disabled selected>Choose your option</option>
+                <!--                Get enum value from java-->
+                <option value="ACCOMMODATION">ACCOMMODATION</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+            <input type="hidden" name="destination" th:value="#{trip.id}"/>
+
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <br/>
+
+    </td>
+</tr>
+
+<div th:each="trip: ${trips}">
+    <row-trip class="container">
+        <div class="row">
+            <h2 th:text="${trip.title}">Sunny Barcelona in may</h2>
+            <div class="col text-right"
+                 th:text="'Author: ' + ${trip.creatorEmail} + ', Participants: ' + ${#lists.size(trip.participantsEmails)}"
+            >Author: Kamil, Participants: 24
+            </div>
+
+            <div class="w-100"></div>
+
+
+            <div th:each="event: ${trip.events}" class="w-100">
+                <p class="trip-event-desc-title" th:text="${event.title}">Sleep in Barcelona</p>
+                <p class="trip-event-desc-row" th:text="${event.from} + ' - ' + ${event.to}">data - data</p>
+                <br>
+                <p class="trip-event-desc-row"
+                   th:text="${event.eventType} + ' - ' + ${event.location.locationDescription}">
+                    ACCOMADATION - Barcelona</p>
+                <br>
+                <br>
+                <br>
+
+            </div>
+
+            <a type="submit" class="btn btn-light">Edit</a>
+
+        </div>
+
+
+    </row-trip>
+</div>
+
+
+<div th:insert="fragments/tripnew :: triprow"></div>
+
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>
