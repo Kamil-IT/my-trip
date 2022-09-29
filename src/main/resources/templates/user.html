@@ -2,9 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>My Trip</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-triplist.css}"/>
+    <!--    For development purpose-->
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <link rel="stylesheet" href="../static/css/styles-navbar.css"/>
+    <link rel="stylesheet" href="../static/css/styles-triplist.css"/>
 </head>
 <body>
+
+<div th:insert="fragments/navbar :: navbar"></div>
+
+
+
+<div th:insert="fragments/footer :: footer"></div>
 
 </body>
 </html>

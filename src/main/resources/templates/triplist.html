@@ -18,44 +18,6 @@
 
 <div th:insert="fragments/navbar :: navbar"></div>
 
-<tr th:each="trip: ${trips}">
-    <td th:text="${trip.title}"/>
-
-    <td>
-
-        <br/>
-        <form action="/trips/events" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title"><br><br>
-
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location"><br><br>
-
-            <label for="from">From:</label>
-            <input type="date" id="from" name="from"><br><br>
-            <label for="to">To:</label>
-            <input type="date" id="to" name="to"><br><br>
-
-            <!--            https://www.baeldung.com/thymeleaf-enums - TODO-->
-            <label for="type">Type:</label>
-            <select name="type" id="type">
-                <option value="" disabled selected>Choose your option</option>
-                <!--                Get enum value from java-->
-                <option value="ACCOMMODATION">ACCOMMODATION</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-            </select>
-            <input type="hidden" name="destination" th:value="#{trip.id}"/>
-
-
-            <input type="submit" value="Submit">
-        </form>
-
-        <br/>
-
-    </td>
-</tr>
-
 <div th:each="trip: ${trips}">
     <row-trip class="container">
         <div class="row">
@@ -81,7 +43,7 @@
 
             </div>
 
-            <a type="submit" class="btn btn-light">Edit</a>
+            <a type="submit" class="btn btn-light" th:href="'/trip/' + ${trip.uuid}">Edit</a>
 
         </div>
 
