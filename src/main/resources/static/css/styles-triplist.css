@@ -15,9 +15,19 @@ row-trip {
     margin-top: 5rem;
 }
 
-.new-trip {
-    margin-left: 2rem;
-    margin-bottom: 1rem;
+row-event {
+    display: flex;
+    flex: 1;
+
+    border-radius: 5px;
+
+    box-shadow: 0 0 21px 3px rgba(0, 0, 0, 0.15);
+    font-size: .9em;
+    padding: .3em .65em;
+    border: 1px solid rgba(137, 137, 137, 0.2);
+
+    margin-left: 1rem;
+
 }
 
 .btn-light {
