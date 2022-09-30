@@ -5,8 +5,8 @@
 
 <!--    User-->
 
-    <changeSet author="kwolny" id="create table user">
-        <createTable tableName="user">
+    <changeSet author="kwolny" id="create table user_app">
+        <createTable tableName="user_app">
             <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -15,18 +15,32 @@
         </createTable>
     </changeSet>
 
+    <changeSet author="kwolny" id="create table user_app_trip">
+        <createTable tableName="user_app_trip">
+            <column name="user_app_email" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="trips_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 <!--    Trip-->
 
     <changeSet author="kwolny" id="create table trip">
         <createTable tableName="trip">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="uuid" type="BINARY(16)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
 <!--            Foreign key from user (trip organiser)-->
             <column name="creator" type="VARCHAR(255)"/>
             <column name="title" type="VARCHAR(255)"/>
-            <column name="from" type="DATE"/>
-            <column name="to" type="DATE"/>
+            <column name="end_date" type="DATE"/>
+            <column name="start_date" type="DATE"/>
         </createTable>
     </changeSet>
 
@@ -48,6 +62,7 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
+            <column name="uuid" type="BINARY(16)"/>
             <column name="trip_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -55,11 +70,12 @@
 <!--            TODO: meaby add some properties for booking etc.-->
             <column name="description" type="VARCHAR(65535)"/>
             <column name="trip_event_type_id" type="BIGINT"/>
-            <column name="creator" type="VARCHAR(255)"/>
-            <column name="from" type="DATETIME"/>
-            <column name="to" type="DATETIME"/>
-<!--            Convet to be readble for api with weather-->
-            <column name="location" type="VARCHAR(65535)"/>
+            <column name="creator_email" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="location_description" type="VARCHAR(255)"/>
+            <column name="latitude" type="NUMBER"/>
+            <column name="longitude" type="NUMBER"/>
         </createTable>
     </changeSet>
 

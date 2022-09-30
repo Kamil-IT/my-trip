@@ -20,6 +20,6 @@ public class TripEventTypePropertiesJpa {
     private String propertyKey;
     private String propertyValue;
 
-    @OneToOne
+    @ManyToOne
     private TripEventJpa tripEventJpa;
 }

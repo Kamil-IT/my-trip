@@ -1,14 +1,14 @@
 package com.mytrip.demo.application.persistance.trip.event.type;
 
+import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Data
@@ -21,4 +21,7 @@ public class TripEventTypeJpa {
     private Long id;
     @Enumerated(EnumType.STRING)
     private TripEventTypeName name;
+
+    @OneToMany(mappedBy = "tripType")
+    private List<TripEventJpa> trips = new ArrayList<>();
 }

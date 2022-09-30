@@ -39,9 +39,9 @@ public class TripController {
     }
 
     @PostMapping("/trip")
-    public TripJpa addTrip(@Valid CreateTripDto trip) {
+    public TripJpa addTrip(@RequestBody @Valid CreateTripDto trip) {
 //        From spring security get user
-        return tripService.createOrUpdate(trip, "email");
+        return tripService.createOrUpdate(trip, "email@gamil.com");
     }
 
     @PostMapping("/trip/participant")

@@ -1,6 +1,8 @@
 package com.mytrip.demo.application.port.out;
 
+import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.trip.TripJpa;
+import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
 import lombok.RequiredArgsConstructor;
@@ -13,38 +15,49 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class TripService {
-    private List<TripJpa> trips = new ArrayList<>();
+    private final TripRepository repository;
 
     private final UserService userService;
 
     public List<TripJpa> getAll(){
-        return trips;
+        return repository.findAll();
     }
 
     public TripJpa getById(UUID id){
-        return trips.stream().filter(trip -> trip.getUuid().equals(id)).findFirst().orElseThrow();
+        return getByUuid(id);
+    }
+
+    private TripJpa getByUuid(UUID id) {
+        return repository.findByUuid(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public TripJpa createOrUpdate(CreateTripDto trip, String email){
-        TripJpa createdTrip = TripJpa.builder()
-                .tripEvents(new ArrayList<>()).to(trip.getTo()).from(trip.getFrom()).participants(userService.getAll()).title(trip.getTitle()).build();
+        UserJpa user = userService.getById(email);
 
-        trips.add(createdTrip);
+        TripJpa createdTrip = TripJpa.builder()
+                .endDate(trip.getTo())
+                .startDate(trip.getFrom())
+                .participants(userService.getAll())
+                .title(trip.getTitle())
+                .uuid(UUID.randomUUID())
+                .build();
+        createdTrip.setCreator(user.getEmail());
+
+        repository.save(createdTrip);
 
         return createdTrip;
     }
 
     public void addParticipants(UUID tripUUID, String email) {
-        TripJpa trip = trips.stream().filter(trp -> tripUUID.equals(trp.getUuid())).findFirst().orElseThrow();
+        TripJpa trip = getByUuid(tripUUID);
         UserJpa user = userService.getById(email);
         trip.addParticipants(user);
     }
 
     public void deleteParticipant(UUID tripUUID, String email) {
-        TripJpa trip = trips.stream().filter(trp -> tripUUID.equals(trp.getUuid())).findFirst().orElseThrow();
+        TripJpa trip = getByUuid(tripUUID);
         UserJpa user = userService.getById(email);
 
         trip.removeParticipants(user);
-
     }
 }
