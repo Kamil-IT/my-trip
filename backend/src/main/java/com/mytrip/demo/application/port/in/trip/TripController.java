@@ -2,6 +2,8 @@ package com.mytrip.demo.application.port.in.trip;
 
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
+import com.mytrip.demo.application.port.in.trip.mapper.EventMapper;
+import com.mytrip.demo.application.port.in.trip.mapper.TripMapper;
 import com.mytrip.demo.application.port.in.trip.model.*;
 import com.mytrip.demo.domain.Trip;
 import com.mytrip.demo.application.port.out.EventService;
@@ -23,6 +25,7 @@ import java.util.UUID;
 public class TripController {
 
     private final TripService tripService;
+    private final TripMapper tripMapper;
     private final EventService eventService;
 
 //    Trip
@@ -35,7 +38,7 @@ public class TripController {
     @GetMapping("/trip")
     public GetTripsDto getTrips() {
         List<TripJpa> all = tripService.getAll();
-        return new GetTripsDto(Collections.singletonList(Trip.builder().build()));
+        return new GetTripsDto(tripMapper.toDomain(all));
     }
 
     @PostMapping("/trip")
