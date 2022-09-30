@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trip</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles-triplist.css}"/>
+    <!--    For development purpose-->
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <link rel="stylesheet" href="../static/css/styles-navbar.css"/>
+    <link rel="stylesheet" href="../static/css/styles-triplist.css"/>
+</head>
+<body>
+
+<div th:insert="fragments/navbar :: navbar"></div>
+
+<row-trip class="container">
+
+    <div class="d-flex flex-column">
+
+        <h5>Trip:</h5>
+
+        <div class="d-flex flex-row">
+            <div class="p-2">
+                <label for="uuid">Id:</label>
+                <input th:value="${trip.uuid}" id="uuid" readonly class="form-control"/>
+            </div>
+
+            <div class="p-2">
+                <label for="creatorEmail">Creator:</label>
+                <input th:value="${trip.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
+            </div>
+        </div>
+
+        <form method="post" target="hiddenFrame" href="/trip">
+
+            <div class="d-flex flex-row">
+                <div class="p-2">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" th:value="${trip.title}">
+                </div>
+
+                <div class="p-2">
+                    <label for="from">From:</label>
+                    <input type="date" id="from" name="from" class="form-control" th:value="${trip.from}">
+                </div>
+
+                <div class="p-2">
+                    <label for="to">To:</label>
+                    <input type="date" id="to" name="to" class="form-control" th:value="${trip.to}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-light">Save</button>
+
+
+        </form>
+
+        <h5>Participants:</h5>
+        <div th:each="participantEmail: ${trip.participantsEmails}">
+            <div class="row">
+                <h6 th:text="${participantEmail}"
+                    style="margin-left: 2rem; margin-right: 5px; margin-top: 0.5rem;">mail@ma.com</h6>
+                <form method="post" action="/v1/trip/participant">
+                    <input type="hidden" name="email" id="email" th:value="${participantEmail}" />
+                    <input type="hidden" name="eventUUID" id="tripUUID" th:value="${trip.uuid}" />
+
+                    <button type="submit" class="btn btn-danger">remove</button>
+                </form>
+            </div>
+            <br>
+
+        </div>
+
+        <div class="d-flex flex-row">
+            <form method="post" href="/trip/participant" target="hiddenFrame">
+                <input th:text="${participantEmail}" class="form-control"/>
+                <button type="submit" class="btn btn-success">add</button>
+            </form>
+        </div>
+
+
+        <h5>Events in trip:</h5>
+
+        <row-event th:each="event: ${trip.events}" class="d-flex flex-column">
+            <div class="d-flex flex-row">
+                <div class="p-2">
+                    <label for="uuid">Id:</label>
+                    <input th:value="${event.uuid}" id="uuid" readonly class="form-control"/>
+                </div>
+
+                <div class="p-2">
+                    <label for="creatorEmail">Creator:</label>
+                    <input th:value="${event.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
+                </div>
+            </div>
+
+            <form action="/trip" method="post" target="hiddenFrame">
+
+
+                <div class="p-2">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" th:value="${event.title}">
+                </div>
+
+                <div class="p-2">
+
+                    <label for="type">Type:</label>
+                    <select name="type" id="type">
+                        <option th:each="colorOpt : ${T(com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName).values()}"
+                                th:value="${colorOpt}" th:text="${colorOpt.displayValue}"></option>
+                    </select>
+
+                </div>
+
+                <div class="d-flex flex-row">
+
+                    <div class="p-2">
+                        <label for="from">From:</label>
+                        <input type="date" id="from" name="from" class="form-control" th:value="${event.from}">
+                    </div>
+
+                    <div class="p-2">
+                        <label for="to">To:</label>
+                        <input type="date" id="to" name="to" class="form-control" th:value="${event.to}">
+                    </div>
+
+                </div>
+
+                <div class="p-2">
+                    <label for="locationDescription">Location:</label>
+                    <input type="text" id="locationDescription" name="locationDescription" class="form-control"
+                           th:value="${event.location.locationDescription}">
+                </div>
+
+            </form>
+
+            <div class="p-2">
+                <h5>Event properties:</h5>
+            </div>
+            <div th:each="property: ${event.properties}">
+
+                <div class="d-flex flex-row">
+
+                    <table class="table" style="margin-left: 2rem">
+                        <thead>
+                        <tr>
+                            <th scope="col">Key</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Save</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <form method="post" class="d-flex flex-column" target="hiddenFrame">
+
+                            <tr>
+                                <td>
+                                    <input type="text" id="key" name="key" th:value="${property.key}"
+                                           class="form-control">
+                                </td>
+
+                                <td>
+                                    <input type="text" id="value" name="value" th:value="${property.value}"
+                                           class="form-control">
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-light">Save</button>
+                                </td>
+                            </tr>
+
+                        </form>
+                        <tr>
+                            <form method="post" class="d-flex flex-column" target="hiddenFrame">
+
+                                <td>
+                                    <input type="text" id="key" name="key" class="form-control">
+                                </td>
+
+                                <td>
+                                    <input type="text" id="value" name="value" class="form-control">
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-light">Save</button>
+                                </td>
+                            </form>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+        </row-event>
+
+    </div>
+
+
+</row-trip>
+
+<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+<div th:insert="fragments/footer :: footer"></div>
+
+</body>
+</html>
