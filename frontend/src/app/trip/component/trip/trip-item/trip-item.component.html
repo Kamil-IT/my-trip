@@ -1,0 +1,29 @@
+<div class="container row-trip">
+  <div class="row">
+
+    <h2>{{trip?.title}}</h2>
+
+    <div class="col text-right">
+      {{'Author: ' + trip?.creatorEmail + ', Participants: ' + trip?.participantsEmails?.length}}
+    </div>
+
+    <div class="w-100"></div>
+
+
+    <div *ngFor="let event of trip?.events" class="w-100">
+      <p class="trip-event-desc-title">{{event.title}}</p>
+      <p class="trip-event-desc-row">{{event.from + ' - ' + event.to}}</p>
+      <br>
+      <p class="trip-event-desc-row">
+        {{event.eventType + ' - ' + event.location.locationDescription}}}
+      </p>
+      <br>
+      <br>
+      <br>
+
+    </div>
+
+    <a type="submit" class="btn btn-light" href="{{'/trip/' + trip?.uuid}}">Edit</a>
+
+  </div>
+</div>

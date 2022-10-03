@@ -4,7 +4,7 @@
     <h2>New trip</h2>
 
     <div class="w-100"></div>
-    <form action="/trips" method="post" class="new-trip" target="hiddenFrame">
+    <form action="/trips" method="post">
 
       <div class="col-sm">
         <label for="title">Title:</label>
@@ -16,6 +16,8 @@
         <label for="to">To:</label>
         <input type="date" id="to" name="to" class="form-control">
       </div>
+
+      <div class="w-100"></div>
 
       <input type="submit" value="Create" class="btn btn-light" style="margin-top: 1rem">
 
