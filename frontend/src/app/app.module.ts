@@ -16,6 +16,9 @@ import { TripEditComponent } from './trip/component/trip/trip-edit/trip-edit.com
 import { UserOverviewComponent } from './user/user-overview/user-overview.component';
 import {TripService} from "./trip/services/TripService";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import { EventEditComponent } from './trip/component/event/event-edit/event-edit.component';
+import { EventNewComponent } from './trip/component/event/event-new/event-new.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     EventItemComponent,
     EventOverviewComponent,
     TripEditComponent,
-    UserOverviewComponent
+    UserOverviewComponent,
+    EventEditComponent,
+    EventNewComponent
   ],
   imports: [
     BrowserModule,
@@ -36,13 +41,13 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     RouterModule.forRoot([
       {path: '', redirectTo: '/home', pathMatch: 'full'},
       {path: 'home', component: TripOverviewComponent},
-      // TODO: add redirect
-      {path: 'trip', component: TripEditComponent},
-      // {path: 'shoppingcard', component: ShoppingCartOverviewComponent}
+      {path: 'trip/:id', component: TripEditComponent},
+      // {path: 'user', component: TripEditComponent},
 
     ]),
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [TripService, HttpClient],
   bootstrap: [AppComponent]

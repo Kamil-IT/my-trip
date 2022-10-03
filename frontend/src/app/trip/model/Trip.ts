@@ -13,3 +13,9 @@ export interface Trip {
 export interface TripsResponse {
   trips: Trip[];
 }
+
+export interface CreateTripRequestModel {
+  title: string | null;
+  from: string | null;
+  to: string | null;
+}

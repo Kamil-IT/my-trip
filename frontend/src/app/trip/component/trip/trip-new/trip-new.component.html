@@ -4,17 +4,17 @@
     <h2>New trip</h2>
 
     <div class="w-100"></div>
-    <form action="/trips" method="post">
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit(tripForm.getRawValue())">
 
       <div class="col-sm">
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" class="form-control">
+        <input type="text" id="title" name="title" formControlName="title" class="form-control">
 
         <label for="from">From:</label>
-        <input type="date" id="from" name="from" class="form-control">
+        <input type="date" id="from" name="from" formControlName="from" class="form-control">
 
         <label for="to">To:</label>
-        <input type="date" id="to" name="to" class="form-control">
+        <input type="date" id="to" name="to" formControlName="to" class="form-control">
       </div>
 
       <div class="w-100"></div>
