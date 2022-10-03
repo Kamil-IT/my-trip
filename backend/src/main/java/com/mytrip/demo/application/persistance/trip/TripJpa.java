@@ -40,7 +40,7 @@ public class TripJpa {
     @JoinTable(name = "trip_participant", inverseJoinColumns = {@JoinColumn(name = "user_email")})
     private List<UserJpa> participants;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trip")
     private List<TripEventJpa> tripEvents;
 
     public void addParticipants(UserJpa user) {

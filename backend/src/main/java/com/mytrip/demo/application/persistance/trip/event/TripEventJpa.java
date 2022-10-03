@@ -36,11 +36,14 @@ public class TripEventJpa {
     private String locationDescription;
     @ManyToOne
     @JoinColumn(name = "trip_id")
-    private TripJpa tripJpa;
+    private TripJpa trip;
     @ManyToOne
     private UserJpa creator;
     @ManyToMany
-    @JoinTable(name = "trip_event_participant", joinColumns = @JoinColumn(name = "trip_event_id"),inverseJoinColumns = @JoinColumn(name = "user_email"))
+    @JoinTable(name = "trip_event_participant",
+            joinColumns = @JoinColumn(name = "trip_event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_email")
+    )
     private Set<UserJpa> participants = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "trip_event_type_id")

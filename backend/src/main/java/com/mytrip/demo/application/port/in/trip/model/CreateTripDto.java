@@ -1,14 +1,15 @@
 package com.mytrip.demo.application.port.in.trip.model;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Value
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CreateTripDto {
 
