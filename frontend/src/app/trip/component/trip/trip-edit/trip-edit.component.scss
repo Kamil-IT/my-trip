@@ -1,8 +1,7 @@
 .row-trip {
   display: flex;
-  flex: 1;
 
-  margin: 1em 4em;
+  margin: 5rem auto 1em;
   border-radius: 5px;
   box-shadow: 0 0 21px 3px rgba(0, 0, 0, 0.15);
   background: #fff;
@@ -12,7 +11,17 @@
   border: 1px solid rgba(137, 137, 137, 0.2);
   background: rgba(137, 137, 137, 0.04);
 
-  margin-top: 5rem;
+}
+
+.row-trip-inside {
+  margin: 1em 1em;
+  border-radius: 5px;
+  background: #fff;
+  font-size: .9em;
+  padding: .3em .65em;
+  color: #5e5e5e;
+  border: 1px solid rgba(137, 137, 137, 0.2);
+  background: rgba(137, 137, 137, 0.04);
 }
 
 .row {
@@ -22,7 +31,6 @@
 
 .row-event {
   display: flex;
-  flex: 1;
 
   border-radius: 5px;
 

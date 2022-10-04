@@ -21,17 +21,20 @@
       <div class="d-flex flex-row">
         <div class="p-2">
           <label for="title">Title:</label>
-          <input type="text" id="title" name="title" class="form-control" value="{{trip?.title}}" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" >
+          <input type="text" id="title" name="title" class="form-control" value="{{trip?.title}}" [(ngModel)]="title"
+                 [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="p-2">
           <label for="from">From:</label>
-          <input type="date" id="from" name="from" class="form-control" value="{{trip?.from}}" [(ngModel)]="from" [ngModelOptions]="{standalone: true}">
+          <input type="date" id="from" name="from" class="form-control" value="{{trip?.from}}" [(ngModel)]="from"
+                 [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="p-2">
           <label for="to">To:</label>
-          <input type="date" id="to" name="to" class="form-control" value="{{trip?.to}}" [(ngModel)]="to" [ngModelOptions]="{standalone: true}">
+          <input type="date" id="to" name="to" class="form-control" value="{{trip?.to}}" [(ngModel)]="to"
+                 [ngModelOptions]="{standalone: true}">
         </div>
       </div>
 
@@ -42,18 +45,17 @@
 
     <h5>Participants:</h5>
     <div *ngFor="let participantEmail of trip?.participantsEmails">
-      <app-trip-participant [participantEmail]="participantEmail" [tripId]="trip.uuid" [isExisingParticipant]="true"></app-trip-participant>
+      <app-trip-participant [participantEmail]="participantEmail" [tripId]="trip.uuid"
+                            [isExisingParticipant]="true"></app-trip-participant>
     </div>
     <app-trip-participant [tripId]="trip.uuid"></app-trip-participant>
 
 
     <h5>Events in trip:</h5>
+    <div class="row-trip-inside">
+      <app-event-new [creatorEmail]="trip.creatorEmail"></app-event-new>
 
-    <div *ngFor="let event of trip?.events" class="d-flex flex-column row-event">
-      <app-event-edit [event]="event"></app-event-edit>
     </div>
-    <app-event-new [creatorEmail]="trip.creatorEmail"></app-event-new>
-
   </div>
 
 
