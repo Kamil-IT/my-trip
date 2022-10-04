@@ -2,28 +2,26 @@ package com.mytrip.demo.application.persistance.trip.event;
 
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.event.properties.TripEventTypePropertiesJpa;
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeJpa;
-import com.mytrip.demo.application.persistance.user.UserJpa;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
+import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
 @Entity(name = "trip_event")
 public class TripEventJpa {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 //    Delete this field creator shoulde be administrator of that
 //    private String creator;
@@ -37,21 +35,24 @@ public class TripEventJpa {
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private TripJpa trip;
-    @ManyToOne
-    private UserJpa creator;
+    @Column(name = "creator_email")
+    private String creator;
+
+
     @ManyToMany
     @JoinTable(name = "trip_event_participant",
             joinColumns = @JoinColumn(name = "trip_event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_email")
     )
-    private Set<UserJpa> participants = new HashSet<>();
-    @ManyToOne
-    @JoinColumn(name = "trip_event_type_id")
-    private TripEventTypeJpa tripType;
-    @OneToMany
-    private List<TripEventTypePropertiesJpa> properties;
+    @ToString.Exclude
+    private Set<UserEventParticipantsJpa> participants = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private TripEventTypeName tripType;
+    @OneToMany(mappedBy = "tripEventJpa")
+    @ToString.Exclude
+    private List<TripEventTypePropertiesJpa> properties = new ArrayList<>();
 
-    public void addParticipants(UserJpa user) {
+    public void addParticipants(UserEventParticipantsJpa user) {
         participants.add(user);
         List<TripEventJpa> trips = user.getTripEventsParticipants();
         trips.add(this);
@@ -60,5 +61,18 @@ public class TripEventJpa {
     public void addProperty(String key, String value) {
         TripEventTypePropertiesJpa property = TripEventTypePropertiesJpa.builder().propertyKey(key).propertyValue(value).tripEventJpa(this).build();
         properties.add(property);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TripEventJpa that = (TripEventJpa) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -50,11 +50,15 @@
     </div>
     <app-trip-participant [tripId]="trip.uuid"></app-trip-participant>
 
-
     <h5>Events in trip:</h5>
-    <div class="row-trip-inside">
-      <app-event-new [creatorEmail]="trip.creatorEmail"></app-event-new>
+    <div *ngFor="let event of trip?.events">
+      <div class="row-trip-inside">
+        <app-event-edit [event]="event"></app-event-edit>
+      </div>
+    </div>
 
+    <div class="row-trip-inside">
+      <app-event-new [creatorEmail]="trip.creatorEmail" [tripId]="trip.uuid"></app-event-new>
     </div>
   </div>
 

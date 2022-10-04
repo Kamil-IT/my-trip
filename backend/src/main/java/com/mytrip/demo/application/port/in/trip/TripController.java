@@ -2,10 +2,12 @@ package com.mytrip.demo.application.port.in.trip;
 
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
+import com.mytrip.demo.application.port.in.trip.mapper.EventMapper;
 import com.mytrip.demo.application.port.in.trip.mapper.TripMapper;
 import com.mytrip.demo.application.port.in.trip.model.*;
 import com.mytrip.demo.application.port.out.EventService;
 import com.mytrip.demo.application.port.out.TripService;
+import com.mytrip.demo.domain.Event;
 import com.mytrip.demo.domain.Trip;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ public class TripController {
 
     private final TripService tripService;
     private final TripMapper tripMapper;
+    private final EventMapper eventMapper;
     private final EventService eventService;
 
 //    Trip
@@ -69,9 +72,9 @@ public class TripController {
 //    Event
 
     @PostMapping("/trip/event")
-    public TripEventJpa addEvent(@RequestBody @Valid CreateEventDto event) {
+    public Event addEvent(@RequestBody @Valid CreateEventDto event) {
 //        From spring security get user
-        return eventService.create(event, "email");
+        return eventMapper.toDomain(eventService.create(event, "email@gamil.com"));
     }
 
     @PostMapping("/trip/event/participant")

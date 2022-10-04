@@ -19,8 +19,8 @@ public interface EventMapper {
 //    @Mapping(target = "LocationDetails.locationDescription", source = "locationDescription")
     @Mapping(target = "from", source = "startDate")
     @Mapping(target = "to", source = "endDate")
-    @Mapping(target = "creatorEmail", source = "creator.email")
-    @Mapping(target = "eventType", source = "tripType.name")
+    @Mapping(target = "creatorEmail", source = "creator")
+    @Mapping(target = "eventType", source = "tripType")
     Event toDomain(TripEventJpa event);
 
     List<Event> toDomain(List<TripEventJpa> event);

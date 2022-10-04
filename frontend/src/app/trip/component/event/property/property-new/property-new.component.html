@@ -2,15 +2,20 @@
 
   <div class="p-2">
     <label for="key">key</label>
-    <input type="text" id="key" name="key" class="form-control">
+    <input type="text" id="key" name="key" class="form-control" [(ngModel)]="key">
   </div>
   <div class="p-2">
     <label for="value">value</label>
-    <input type="text" id="value" name="value" class="form-control">
+    <input type="text" id="value" name="value" class="form-control" [(ngModel)]="value">
   </div>
-  <div class="p-2">
+  <div class="p-2" *ngIf="isSaveModeActive">
 
     <button class="btn btn-light">Save</button>
+  </div>
+  <div class="p-2" *ngIf="!isSaveModeActive">
+
+    <button class="btn btn-light" [disabled]="clicked" (click)="addProperty(); clicked = true;">add
+    </button>
   </div>
 
 </form>

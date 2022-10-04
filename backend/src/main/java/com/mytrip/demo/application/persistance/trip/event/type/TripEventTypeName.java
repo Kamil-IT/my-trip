@@ -4,7 +4,7 @@ public enum TripEventTypeName {
 
     ACCOMMODATION("Accommodation"),
     TRANSFER("Transfer"),
-    TOUR("Accommodation");
+    TOUR("Tour");
 
 
     private final String displayValue;

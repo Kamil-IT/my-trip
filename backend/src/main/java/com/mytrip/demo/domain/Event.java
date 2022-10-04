@@ -1,6 +1,5 @@
 package com.mytrip.demo.domain;
 
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeJpa;
 import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
 import lombok.Builder;
 import lombok.Value;

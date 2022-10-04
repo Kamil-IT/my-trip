@@ -3,7 +3,9 @@ package com.mytrip.demo.application.port.out;
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
+import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.UserJpa;
+import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
 import com.mytrip.demo.application.port.in.trip.model.UpdateTripDto;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,7 @@ public class TripService {
         TripJpa createdTrip = TripJpa.builder()
                 .endDate(trip.getTo())
                 .startDate(trip.getFrom())
-                .participants(userService.getAll())
+                .participants(userService.getAllTripParticipant())
                 .title(trip.getTitle())
                 .uuid(UUID.randomUUID())
                 .build();
@@ -61,14 +63,14 @@ public class TripService {
 
     public void addParticipants(UUID tripUUID, String email) {
         TripJpa trip = getByUuid(tripUUID);
-        UserJpa user = userService.getById(email);
+        UserTripParticipantsJpa user = userService.getTripParticipantById(email);
         trip.addParticipants(user);
         repository.save(trip);
     }
 
     public void deleteParticipant(UUID tripUUID, String email) {
         TripJpa trip = getByUuid(tripUUID);
-        UserJpa user = userService.getById(email);
+        UserTripParticipantsJpa user = userService.getTripParticipantById(email);
 
         trip.removeParticipants(user);
         repository.save(trip);

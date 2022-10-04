@@ -23,6 +23,6 @@ export class TripNewComponent implements OnInit {
   }
 
   onSubmit(requestModel: CreateTripRequestModel) {
-    this.tripService.createTrip(requestModel).subscribe(res => console.log(res));
+    this.tripService.createTrip(requestModel);
   }
 }

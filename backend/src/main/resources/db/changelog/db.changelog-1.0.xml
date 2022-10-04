@@ -59,7 +59,7 @@
 
     <changeSet author="kwolny" id="create table trip_event">
         <createTable tableName="trip_event">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="uuid" type="BINARY(16)"/>
@@ -69,7 +69,7 @@
             <column name="title" type="VARCHAR(255)"/>
 <!--            TODO: meaby add some properties for booking etc.-->
             <column name="description" type="VARCHAR(65535)"/>
-            <column name="trip_event_type_id" type="BIGINT"/>
+            <column name="trip_type" type="VARCHAR(65535)"/>
             <column name="creator_email" type="VARCHAR(255)"/>
             <column name="start_date" type="DATETIME"/>
             <column name="end_date" type="DATETIME"/>
@@ -83,7 +83,7 @@
 
     <changeSet author="kwolny" id="create table trip_event_type">
         <createTable tableName="trip_event_type">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(65535)">
@@ -94,9 +94,6 @@
 
     <changeSet author="kwolny" id="create table trip_event_properties">
         <createTable tableName="trip_event_properties">
-            <column name="trip_event_type_id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
             <column name="trip_event_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>

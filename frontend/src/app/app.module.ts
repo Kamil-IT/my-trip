@@ -22,6 +22,7 @@ import { EventNewComponent } from './trip/component/event/event-new/event-new.co
 import { PropertyEditComponent } from './trip/component/event/property/property-edit/property-edit.component';
 import { PropertyNewComponent } from './trip/component/event/property/property-new/property-new.component';
 import { TripParticipantComponent } from './trip/component/trip/trip-participant/trip-participant.component';
+import {EventService} from "./trip/services/EventService";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { TripParticipantComponent } from './trip/component/trip/trip-participant
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [TripService, HttpClient],
+  providers: [TripService, EventService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

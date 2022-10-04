@@ -11,7 +11,7 @@
 
       <div class="p-2">
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" class="form-control" th:value="${event.title}">
+        <input type="text" id="title" name="title" class="form-control" [(ngModel)]="title">
       </div>
 
     </div>
@@ -19,10 +19,10 @@
     <div class="d-flex flex-row">
       <div class="p-2">
         <label for="type">Type:</label>
-        <select name="type" id="type">
-          <option
-            th:each="colorOpt : ${T(com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName).values()}"
-            th:value="${colorOpt}" th:text="${colorOpt.displayValue}"></option>
+        <select name="type" id="type" class="form-select" aria-label="Select event type" [(ngModel)]="eventType">
+          <option>Accommodation</option>
+          <option>Transfer</option>
+          <option>Tour</option>
         </select>
       </div>
 
@@ -35,12 +35,12 @@
 
         <div class="p-2">
           <label for="from">From:</label>
-          <input type="date" id="from" name="from" class="form-control" th:value="${event.from}">
+          <input type="date" id="from" name="from" class="form-control" [(ngModel)]="from">
         </div>
 
         <div class="p-2">
           <label for="to">To:</label>
-          <input type="date" id="to" name="to" class="form-control" th:value="${event.to}">
+          <input type="date" id="to" name="to" class="form-control" [(ngModel)]="to">
         </div>
 
       </div>
@@ -50,7 +50,7 @@
         <div class="p-2">
           <label for="locationDescription">Location:</label>
           <input type="text" id="locationDescription" name="locationDescription" class="form-control"
-                 th:value="${event.location.locationDescription}">
+                 [(ngModel)]="locationDescription">
         </div>
       </div>
 
@@ -60,11 +60,11 @@
       <h5>Event properties:</h5>
     </div>
 
-    <div th:each="property: ${event.properties}">
-      <app-property-edit></app-property-edit>
+    <app-property-new [isSaveModeActive]="false" (bookTitleCreated)="onPropertyAdded($event)"></app-property-new>
+    <app-property-new [isSaveModeActive]="false"></app-property-new>
+
+    <div class="p-2">
+      <button (click)="save()" class="btn btn-light">Save</button>
     </div>
-
-    <app-property-new></app-property-new>
-
   </div>
 </div>

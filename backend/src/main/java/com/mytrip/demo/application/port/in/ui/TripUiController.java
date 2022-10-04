@@ -1,7 +1,6 @@
 package com.mytrip.demo.application.port.in.ui;
 
 import com.mytrip.demo.application.persistance.trip.TripJpa;
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeJpa;
 import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
 import com.mytrip.demo.application.port.out.TripService;
 import com.mytrip.demo.domain.Event;

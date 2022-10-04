@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -17,8 +19,7 @@ public class CreateEventDto {
 
     @NotBlank
     String title;
-    Double latitude;
-    Double longitude;
+    String locationDescription;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate from;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -27,5 +28,7 @@ public class CreateEventDto {
     TripEventTypeName type;
 
     @NotNull
-    UUID eventId;
+    UUID tripId;
+
+    List<Map<String, String>> properties;
 }
