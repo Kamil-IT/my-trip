@@ -1,13 +1,16 @@
 package com.mytrip.demo.application.port.in.trip.model;
 
-import lombok.Value;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@Value
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AddEventPropertyDto {
 
     @NotBlank

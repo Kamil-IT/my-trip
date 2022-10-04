@@ -1,0 +1,15 @@
+<form [formGroup]="participantForm" class="d-flex flex-row">
+
+  <div class="p-2">
+    <label for="email">email</label>
+    <input name="email" id="email" [(ngModel)]="participantEmail" [ngModelOptions]="{standalone: true}"
+           class="form-control"/>
+  </div>
+
+  <div class="p-2">
+    <button type="submit" class="btn btn-danger" (click)="remove()">remove</button>
+  </div>
+  <div class="p-2">
+    <button type="submit" class="btn btn-success" (click)="save()">save</button>
+  </div>
+</form>

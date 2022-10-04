@@ -7,12 +7,12 @@
     <div class="d-flex flex-row">
       <div class="p-2">
         <label for="uuid">Id:</label>
-        <input value="{{trip?.uuid}}" id="uuid" readonly class="form-control"/>
+        <input value="{{trip?.uuid}}" id="uuid" readonly disabled class="form-control"/>
       </div>
 
       <div class="p-2">
         <label for="creatorEmail">Creator:</label>
-        <input value="{{trip?.creatorEmail}}" id="creatorEmail" readonly class="form-control"/>
+        <input value="{{trip?.creatorEmail}}" id="creatorEmail" readonly disabled class="form-control"/>
       </div>
     </div>
 
@@ -21,46 +21,30 @@
       <div class="d-flex flex-row">
         <div class="p-2">
           <label for="title">Title:</label>
-          <input type="text" id="title" name="title" class="form-control" value="{{trip?.title}}">
+          <input type="text" id="title" name="title" class="form-control" value="{{trip?.title}}" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" >
         </div>
 
         <div class="p-2">
           <label for="from">From:</label>
-          <input type="date" id="from" name="from" class="form-control" value="{{trip?.from}}">
+          <input type="date" id="from" name="from" class="form-control" value="{{trip?.from}}" [(ngModel)]="from" [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="p-2">
           <label for="to">To:</label>
-          <input type="date" id="to" name="to" class="form-control" value="{{trip?.to}}">
+          <input type="date" id="to" name="to" class="form-control" value="{{trip?.to}}" [(ngModel)]="to" [ngModelOptions]="{standalone: true}">
         </div>
       </div>
 
-      <button type="submit" class="btn btn-light">Save</button>
+      <button type="submit" class="btn btn-light" (click)="save()">Save</button>
 
 
     </form>
 
     <h5>Participants:</h5>
     <div *ngFor="let participantEmail of trip?.participantsEmails">
-      <div class="row">
-        <h6 style="margin-left: 2rem; margin-right: 5px; margin-top: 0.5rem;">{{participantEmail}}</h6>
-        <form method="post" action="/v1/trip/participant">
-          <input type="hidden" name="email" id="email" value="{{participantEmail}}" />
-          <input type="hidden" name="eventUUID" id="tripUUID" value="{{trip.uuid}}" />
-
-          <button type="submit" class="btn btn-danger">remove</button>
-        </form>
-      </div>
-      <br>
-
+      <app-trip-participant [participantEmail]="participantEmail" [tripId]="trip.uuid" [isExisingParticipant]="true"></app-trip-participant>
     </div>
-
-    <div class="d-flex flex-row">
-      <form method="post" href="/trip/participant">
-        <input th:text="${participantEmail}" class="form-control"/>
-        <button type="submit" class="btn btn-success">add</button>
-      </form>
-    </div>
+    <app-trip-participant [tripId]="trip.uuid"></app-trip-participant>
 
 
     <h5>Events in trip:</h5>
@@ -68,7 +52,7 @@
     <div *ngFor="let event of trip?.events" class="d-flex flex-column row-event">
       <app-event-edit [event]="event"></app-event-edit>
     </div>
-    <app-event-new></app-event-new>
+    <app-event-new [creatorEmail]="trip.creatorEmail"></app-event-new>
 
   </div>
 

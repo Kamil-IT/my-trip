@@ -1,17 +1,20 @@
 package com.mytrip.demo.application.port.in.trip.model;
 
-import lombok.Value;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@Value
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RemoveTripParticipantDto {
 
     @Email
     String email;
 
     @NotNull
-    UUID tripUUID;
+    UUID uuid;
 }

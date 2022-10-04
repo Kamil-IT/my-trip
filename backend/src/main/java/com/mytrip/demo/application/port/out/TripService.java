@@ -5,11 +5,12 @@ import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
+import com.mytrip.demo.application.port.in.trip.model.UpdateTripDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class TripService {
         return repository.findByUuid(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public TripJpa createOrUpdate(CreateTripDto trip, String email){
+    public TripJpa create(CreateTripDto trip, String email){
         UserJpa user = userService.getById(email);
 
         TripJpa createdTrip = TripJpa.builder()
@@ -48,10 +49,21 @@ public class TripService {
         return createdTrip;
     }
 
+    public TripJpa update(UpdateTripDto trip){
+        TripJpa tripDb = repository.findByUuid(trip.getUuid()).orElseThrow(ResourceNotFoundException::new);
+
+        tripDb.setEndDate(trip.getTo());
+        tripDb.setStartDate(trip.getTo());
+        tripDb.setTitle(trip.getTitle());
+
+        return repository.save(tripDb);
+    }
+
     public void addParticipants(UUID tripUUID, String email) {
         TripJpa trip = getByUuid(tripUUID);
         UserJpa user = userService.getById(email);
         trip.addParticipants(user);
+        repository.save(trip);
     }
 
     public void deleteParticipant(UUID tripUUID, String email) {
@@ -59,5 +71,6 @@ public class TripService {
         UserJpa user = userService.getById(email);
 
         trip.removeParticipants(user);
+        repository.save(trip);
     }
 }

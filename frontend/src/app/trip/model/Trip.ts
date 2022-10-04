@@ -19,3 +19,15 @@ export interface CreateTripRequestModel {
   from: string | null;
   to: string | null;
 }
+
+export interface UpdateTripRequestModel {
+  uuid: string | null;
+  title: string | null;
+  from: string | null;
+  to: string | null;
+}
+
+export interface AddParticipantModel {
+  email: string | null;
+  uuid: string | null;
+}

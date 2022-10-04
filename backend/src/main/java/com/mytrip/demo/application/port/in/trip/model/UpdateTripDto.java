@@ -1,7 +1,9 @@
 package com.mytrip.demo.application.port.in.trip.model;
 
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -13,19 +15,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateEventDto {
+public class UpdateTripDto {
+
+    @NotNull
+    UUID uuid;
 
     @NotBlank
     String title;
-    Double latitude;
-    Double longitude;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate from;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate to;
-    @NotNull
-    TripEventTypeName type;
 
-    @NotNull
-    UUID eventId;
+//  trip  Events can be add here -> thig abut it
 }

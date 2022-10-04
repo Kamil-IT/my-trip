@@ -16,9 +16,12 @@ import { TripEditComponent } from './trip/component/trip/trip-edit/trip-edit.com
 import { UserOverviewComponent } from './user/user-overview/user-overview.component';
 import {TripService} from "./trip/services/TripService";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { EventEditComponent } from './trip/component/event/event-edit/event-edit.component';
 import { EventNewComponent } from './trip/component/event/event-new/event-new.component';
+import { PropertyEditComponent } from './trip/component/event/property/property-edit/property-edit.component';
+import { PropertyNewComponent } from './trip/component/event/property/property-new/property-new.component';
+import { TripParticipantComponent } from './trip/component/trip/trip-participant/trip-participant.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { EventNewComponent } from './trip/component/event/event-new/event-new.co
     TripEditComponent,
     UserOverviewComponent,
     EventEditComponent,
-    EventNewComponent
+    EventNewComponent,
+    PropertyEditComponent,
+    PropertyNewComponent,
+    TripParticipantComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,8 @@ import { EventNewComponent } from './trip/component/event/event-new/event-new.co
     ]),
     NgbModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [TripService, HttpClient],
   bootstrap: [AppComponent]
