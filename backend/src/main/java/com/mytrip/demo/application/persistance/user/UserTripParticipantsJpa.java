@@ -23,12 +23,7 @@ public class UserTripParticipantsJpa {
     private String email;
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "trip_participant",
-            inverseJoinColumns = {@JoinColumn(name = "user_email")},
-            joinColumns = @JoinColumn(name = "trip_id")
-    )
+    @ManyToMany(mappedBy = "participants")
     @ToString.Exclude
     private List<TripJpa> trips = new ArrayList<>();
 

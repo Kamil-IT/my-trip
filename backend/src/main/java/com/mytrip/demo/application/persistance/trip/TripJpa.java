@@ -35,7 +35,12 @@ public class TripJpa {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ManyToMany(mappedBy = "trips")
+    @ManyToMany()
+    @JoinTable(
+            name = "trip_participant",
+            inverseJoinColumns = {@JoinColumn(name = "user_email")},
+            joinColumns = @JoinColumn(name = "trip_id")
+    )
     @ToString.Exclude
     private List<UserTripParticipantsJpa> participants = new ArrayList<>();
 

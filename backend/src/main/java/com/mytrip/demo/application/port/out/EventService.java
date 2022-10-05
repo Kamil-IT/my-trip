@@ -34,7 +34,19 @@ public class EventService {
         UserEventParticipantsJpa user = userService.getEventParticipantById(userEmail);
         TripJpa trip = tripService.getById(event.getTripId());
 
-        TripEventJpa eventCreated = TripEventJpa.builder().creator(userEmail).participants(new HashSet<>()).title(event.getTitle()).latitude(10d).longitude(10d).locationDescription(event.getLocationDescription()).startDate(event.getFrom()).endDate(event.getTo()).tripType(event.getType()).build();
+        TripEventJpa eventCreated = TripEventJpa.builder()
+                .uuid(UUID.randomUUID())
+                .creator(userEmail)
+                .participants(new HashSet<>())
+                .title(event.getTitle())
+                .latitude(10d)
+                .longitude(10d)
+                .locationDescription(event.getLocationDescription())
+                .startDate(event.getFrom())
+                .endDate(event.getTo())
+                .tripType(event.getType())
+                .build();
+
         eventCreated.setTrip(trip);
         eventCreated.getTrip().addEvent(eventCreated);
         eventCreated.addParticipants(user);

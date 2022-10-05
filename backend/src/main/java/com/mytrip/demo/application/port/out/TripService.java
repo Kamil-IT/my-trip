@@ -11,6 +11,7 @@ import com.mytrip.demo.application.port.in.trip.model.UpdateTripDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,11 +37,12 @@ public class TripService {
 
     public TripJpa create(CreateTripDto trip, String email){
         UserJpa user = userService.getById(email);
+        UserTripParticipantsJpa participant = userService.getTripParticipantById(email);
 
         TripJpa createdTrip = TripJpa.builder()
                 .endDate(trip.getTo())
                 .startDate(trip.getFrom())
-                .participants(userService.getAllTripParticipant())
+                .participants(Arrays.asList(participant))
                 .title(trip.getTitle())
                 .uuid(UUID.randomUUID())
                 .build();

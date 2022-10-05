@@ -13,7 +13,7 @@ import { EventOverviewComponent } from './trip/component/event/event-overview/ev
 import {RouterModule} from "@angular/router";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TripEditComponent } from './trip/component/trip/trip-edit/trip-edit.component';
-import { UserOverviewComponent } from './user/user-overview/user-overview.component';
+import { UserOverviewComponent } from './user/component/user-overview/user-overview.component';
 import {TripService} from "./trip/services/TripService";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";

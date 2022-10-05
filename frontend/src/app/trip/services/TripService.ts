@@ -10,7 +10,8 @@ export class TripService {
 
   private readonly tripsSubject = new BehaviorSubject<TripsResponse>({trips: []});
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+  }
 
   getTrips(): Observable<TripsResponse> {
     this.populateNewTrips()
@@ -18,7 +19,27 @@ export class TripService {
   }
 
   getTripById(tripId: string): Observable<Trip> {
-    return this.http.get<Trip>(this.BASE_URL + '/' + tripId);
+    let subjectTrip = new BehaviorSubject<Trip>({
+      creatorEmail: "",
+      events: [],
+      from: "",
+      participantsEmails: [],
+      title: "",
+      to: "",
+      uuid: ""
+    });
+
+    // Request trip by id
+    let trip = this.http.get<Trip>(this.BASE_URL + '/' + tripId);
+    trip.subscribe(res => subjectTrip.next(res))
+
+    // Refresh trip when another hanged
+    this.tripsSubject.asObservable()
+      .subscribe(() =>
+        this.http.get<Trip>(this.BASE_URL + '/' + tripId)
+          .subscribe(res => subjectTrip.next(res)))
+
+    return subjectTrip.asObservable();
   }
 
   createTrip(requestModel: CreateTripRequestModel): Observable<TripsResponse> {

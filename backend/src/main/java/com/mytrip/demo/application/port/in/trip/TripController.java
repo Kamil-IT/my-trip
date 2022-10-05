@@ -44,15 +44,15 @@ public class TripController {
     }
 
     @PostMapping("/trip")
-    public TripJpa addTrip(@RequestBody @Valid CreateTripDto trip) {
+    public Trip addTrip(@RequestBody @Valid CreateTripDto trip) {
 //        From spring security get user
-        return tripService.create(trip, "email@gamil.com");
+        return tripMapper.toDomain(tripService.create(trip, "email@gamil.com"));
     }
 
     @PutMapping("/trip")
-    public TripJpa updateTrip(@RequestBody @Valid UpdateTripDto trip) {
+    public Trip updateTrip(@RequestBody @Valid UpdateTripDto trip) {
 //        From spring security get user
-        return tripService.update(trip);
+        return tripMapper.toDomain(tripService.update(trip));
     }
 
     @PostMapping("/trip/participant")
@@ -92,7 +92,7 @@ public class TripController {
     }
 
     @GetMapping("/trip/event")
-    public TripEventJpa getEvent(@PathParam("id") UUID id) {
-        return eventService.getEventById(id);
+    public Event getEvent(@PathParam("id") UUID id) {
+        return tripMapper.toDomain(eventService.getEventById(id));
     }
 }
