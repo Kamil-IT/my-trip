@@ -6,6 +6,8 @@ import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName
 import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,8 +25,11 @@ public class TripEventJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    Delete this field creator shoulde be administrator of that
-//    private String creator;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
+    @ColumnDefault("uuid()")
     private UUID uuid = UUID.randomUUID();
     private String title;
     private LocalDate startDate;

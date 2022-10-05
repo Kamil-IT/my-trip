@@ -8,6 +8,8 @@ export interface Property {
 }
 
 export interface Event {
+  creatorEmail: string;
+  uuid: string;
   location: LocationDescription;
   eventType: string;
   to: string;

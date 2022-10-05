@@ -61,7 +61,7 @@
     </div>
 
     <app-property-new [isSaveModeActive]="false" (bookTitleCreated)="onPropertyAdded($event)"></app-property-new>
-    <app-property-new [isSaveModeActive]="false"></app-property-new>
+    <app-property-new [isSaveModeActive]="false" (bookTitleCreated)="onPropertyAdded($event)"></app-property-new>
 
     <div class="p-2">
       <button (click)="save()" class="btn btn-light">Save</button>

@@ -51,7 +51,7 @@
     <app-trip-participant [tripId]="trip.uuid"></app-trip-participant>
 
     <h5>Events in trip:</h5>
-    <div *ngFor="let event of trip?.events">
+    <div *ngFor="let event of (tripResponse$ | async)?.events">
       <div class="row-trip-inside">
         <app-event-edit [event]="event"></app-event-edit>
       </div>

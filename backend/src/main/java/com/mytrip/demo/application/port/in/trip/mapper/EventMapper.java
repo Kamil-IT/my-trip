@@ -25,7 +25,7 @@ public interface EventMapper {
 
     List<Event> toDomain(List<TripEventJpa> event);
 
-    default Map<String, String> toDomainProperties(List<TripEventTypePropertiesJpa> properties){
+    default Map<String,String> toDomainProperties(List<TripEventTypePropertiesJpa> properties){
         return properties.stream().collect(Collectors.toMap(TripEventTypePropertiesJpa::getPropertyKey, TripEventTypePropertiesJpa::getPropertyValue));
     }
 }

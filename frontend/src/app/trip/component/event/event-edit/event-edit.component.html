@@ -2,12 +2,12 @@
 <div class="d-flex flex-row">
   <div class="p-2">
     <label for="uuid">Id:</label>
-    <input th:value="${event.uuid}" id="uuid" readonly class="form-control"/>
+    <input value="{{event?.uuid}}" id="uuid" readonly class="form-control"/>
   </div>
 
   <div class="p-2">
     <label for="creatorEmail">Creator:</label>
-    <input th:value="${event.creatorEmail}" id="creatorEmail" readonly class="form-control"/>
+    <input value="{{event?.creatorEmail}}" id="creatorEmail" readonly class="form-control"/>
   </div>
 </div>
 
@@ -16,16 +16,23 @@
 
   <div class="p-2">
     <label for="title">Title:</label>
-    <input type="text" id="title" name="title" class="form-control" th:value="${event.title}">
+    <input type="text" id="title" name="title" class="form-control" value="{{event?.title}}">
   </div>
 
   <div class="p-2">
 
     <label for="type">Type:</label>
-    <select name="type" id="type">
-      <option th:each="colorOpt : ${T(com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName).values()}"
-              th:value="${colorOpt}" th:text="${colorOpt.displayValue}"></option>
-    </select>
+    <div class="d-flex flex-row">
+      <div class="p-2">
+        <label for="type">Type:</label>
+        <select name="type" id="type" class="form-select" aria-label="Select event type" [value]="event?.eventType">
+          <option>Accommodation</option>
+          <option>Transfer</option>
+          <option>Tour</option>
+        </select>
+      </div>
+
+    </div>
 
   </div>
 
@@ -33,12 +40,12 @@
 
     <div class="p-2">
       <label for="from">From:</label>
-      <input type="date" id="from" name="from" class="form-control" th:value="${event.from}">
+      <input type="date" id="from" name="from" class="form-control" value="{{event?.from}}">
     </div>
 
     <div class="p-2">
       <label for="to">To:</label>
-      <input type="date" id="to" name="to" class="form-control" th:value="${event.to}">
+      <input type="date" id="to" name="to" class="form-control" value="{{event?.to}}">
     </div>
 
   </div>
@@ -46,7 +53,7 @@
   <div class="p-2">
     <label for="locationDescription">Location:</label>
     <input type="text" id="locationDescription" name="locationDescription" class="form-control"
-           th:value="${event.location.locationDescription}">
+           value="{{event?.location?.locationDescription}}">
   </div>
 
 </form>
@@ -54,59 +61,11 @@
 <div class="p-2">
   <h5>Event properties:</h5>
 </div>
-<div th:each="property: ${event.properties}">
+<div *ngFor="let property of event?.properties?.entries()">
 
-  <div class="d-flex flex-row">
-
-    <table class="table" style="margin-left: 2rem">
-      <thead>
-      <tr>
-        <th scope="col">Key</th>
-        <th scope="col">Value</th>
-        <th scope="col">Save</th>
-      </tr>
-      </thead>
-      <tbody>
-
-      <form method="post" class="d-flex flex-column" target="hiddenFrame">
-
-        <tr>
-          <td>
-            <input type="text" id="key" name="key" th:value="${property.key}"
-                   class="form-control">
-          </td>
-
-          <td>
-            <input type="text" id="value" name="value" th:value="${property.value}"
-                   class="form-control">
-          </td>
-
-          <td>
-            <button class="btn btn-light">Save</button>
-          </td>
-        </tr>
-
-      </form>
-      <tr>
-        <form method="post" class="d-flex flex-column" target="hiddenFrame">
-
-          <td>
-            <input type="text" id="key" name="key" class="form-control">
-          </td>
-
-          <td>
-            <input type="text" id="value" name="value" class="form-control">
-          </td>
-
-          <td>
-            <button class="btn btn-light">Save</button>
-          </td>
-        </form>
-      </tr>
-
-      </tbody>
-
-    </table>
-  </div>
+  <app-property-edit></app-property-edit>
 
 </div>
+
+<app-property-new></app-property-new>
+
