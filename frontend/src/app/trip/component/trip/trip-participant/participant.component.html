@@ -1,11 +1,12 @@
-<form [formGroup]="participantForm" class="d-flex flex-row">
+<form class="d-flex flex-row">
 
   <div class="p-2">
     <label for="email">email:</label>
     <select name="email" id="email" class="form-select" aria-label="Select event type" [(ngModel)]="participantEmail"
             [value]="participantEmail">
-      <option *ngFor="let email of getAllParticipants() | async">{{email}}</option>
-      <option></option>
+      <option *ngFor="let email of getAllParticipants() | async" [value]="email" [attr.selected]="participantEmail == email ? true : null">
+        {{email}}
+      </option>
     </select>
   </div>
 

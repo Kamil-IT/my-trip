@@ -68,7 +68,7 @@
 <app-property-new></app-property-new>
 
 <h5>Participants:</h5>
-<div *ngFor="let participantEmail of event?.participantEmails">
+<div *ngFor="let participantEmail of getParticipantEmails()">
   <app-trip-participant [participantEmail]="participantEmail"
                         [parentId]="this.event === undefined ?  '' : this.event.uuid"
                         [isExisingParticipant]="true" [participantManagement]="eventService"></app-trip-participant>

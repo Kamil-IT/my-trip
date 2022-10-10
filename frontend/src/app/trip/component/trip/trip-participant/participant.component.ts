@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TripService} from "../../../services/TripService";
 import {FormBuilder} from "@angular/forms";
 import {AddParticipantModel} from "../../../model/Trip";
 import {ParticipantManagment} from "../../../services/ParticipantManagment";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
+import {UserService} from "../../../../user/service/UserService";
+import {User} from "../../../../user/model/User";
 
 @Component({
   selector: 'app-trip-participant',
@@ -16,16 +17,20 @@ export class ParticipantComponent implements OnInit {
 
   cache = 0;
 
-  participantEmails :Observable<string[]> | undefined;
+  participantEmails: Observable<string[]> | undefined;
 
   @Input()
   parentId: string = '';
 
   @Input()
   participantManagement: ParticipantManagment = {
-    getAllParticipantsEmail(parentId: string): Observable<string[]> { throw new Error('not implemented')},
-    removeParticipant(addParticipantModel: AddParticipantModel): void {},
-    addParticipant(addParticipantModel: AddParticipantModel): void {}
+    getAllParticipantsEmail(parentId: string): Observable<string[]> {
+      throw new Error('not implemented')
+    },
+    removeParticipant(addParticipantModel: AddParticipantModel): void {
+    },
+    addParticipant(addParticipantModel: AddParticipantModel): void {
+    }
   };
 
   @Input()
@@ -34,12 +39,15 @@ export class ParticipantComponent implements OnInit {
   @Input()
   isExisingParticipant: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private readonly userService: UserService) {
+  }
 
   ngOnInit(): void {
   }
 
   save(): void {
+    console.log(this.participantEmail)
     let addParticipantModel = {
       email: this.participantEmail,
       uuid: this.parentId
@@ -55,21 +63,25 @@ export class ParticipantComponent implements OnInit {
     this.participantManagement.removeParticipant(addParticipantModel);
   }
 
-  getAllParticipants() : Observable<string[]> {
-    console.log(this.participantEmail)
-    // Add user service and delete users with already exist in event/trip + current
-    return this.getAllParticipantsFromCache();
+  getAllParticipants(): Observable<string[]> {
+    return this.getAllParticipantsFromCache()
+      .pipe(map((usersEmail: string[]) => ['', ...usersEmail]));
   }
 
   private getAllParticipantsFromCache() {
-    if (this.participantEmails){
+    let email = this.participantEmail;
+    console.log(email)
+    if (this.participantEmails) {
       return this.participantEmails;
     }
-    this.participantEmails = this.getAllParticipantsFromServer();
+    let participantEmail = this.getAllParticipantsFromServer();
+    this.participantEmails = participantEmail;
+    participantEmail.subscribe(() => this.participantEmail = email);
     return this.participantEmails;
   }
 
-  private getAllParticipantsFromServer() {
-    return this.participantManagement.getAllParticipantsEmail(this.parentId);
+  private getAllParticipantsFromServer() : Observable<string[]> {
+    return this.userService.getUsers()
+      .pipe(map((users: User[]) => users.map(user => user.email)));
   }
 }

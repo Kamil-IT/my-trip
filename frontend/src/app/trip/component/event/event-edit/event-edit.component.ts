@@ -17,4 +17,12 @@ export class EventEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getParticipantEmails() {
+    if (this.event) {
+      return ['', ...this.event?.participantEmails]
+    }
+    return [];
+  }
+
+
 }
