@@ -16,7 +16,7 @@ export interface Event {
   from: string;
   title: string;
   properties: Map<string, string>;
-  participantEmails: string[];
+  participants: string[];
 }
 
 export interface CreateEvent {

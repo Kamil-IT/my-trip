@@ -27,7 +27,6 @@ public class TripController {
 
     private final TripService tripService;
     private final TripMapper tripMapper;
-    private final EventMapper eventMapper;
     private final EventService eventService;
 
 //    Trip
@@ -74,13 +73,20 @@ public class TripController {
     @PostMapping("/trip/event")
     public Event addEvent(@RequestBody @Valid CreateEventDto event) {
 //        From spring security get user
-        return eventMapper.toDomain(eventService.create(event, "email@gamil.com"));
+        return tripMapper.toDomain(eventService.create(event, "email@gamil.com"));
     }
 
     @PostMapping("/trip/event/participant")
     public ResponseEntity<Void> addEventParticipant(@RequestBody @Valid AddParticipantDto participant) {
 //        From spring security get user
         eventService.addParticipants(participant.getUuid(), participant.getEmail());
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/trip/event/participant")
+    public ResponseEntity<Void> removeEventParticipant(@RequestBody @Valid RemoveParticipantDto participant) {
+//        From spring security get user
+        eventService.deleteParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

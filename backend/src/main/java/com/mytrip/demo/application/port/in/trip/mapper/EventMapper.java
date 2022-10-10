@@ -6,11 +6,12 @@ import com.mytrip.demo.domain.Event;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+//@Mapper(componentModel = "spring")
 public interface EventMapper {
 
     @Mapping(target = "location", ignore = true)
@@ -25,7 +26,7 @@ public interface EventMapper {
 
     List<Event> toDomain(List<TripEventJpa> event);
 
-    default Map<String,String> toDomainProperties(List<TripEventTypePropertiesJpa> properties){
+    default Map<String, String> toDomainProperties(Collection<TripEventTypePropertiesJpa> properties) {
         return properties.stream().collect(Collectors.toMap(TripEventTypePropertiesJpa::getPropertyKey, TripEventTypePropertiesJpa::getPropertyValue));
     }
 }

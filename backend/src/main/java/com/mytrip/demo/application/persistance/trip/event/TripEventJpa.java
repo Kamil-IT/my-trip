@@ -59,7 +59,7 @@ public class TripEventJpa {
 
     public void addParticipants(UserEventParticipantsJpa user) {
         participants.add(user);
-        List<TripEventJpa> trips = user.getTripEventsParticipants();
+        Set<TripEventJpa> trips = user.getTripEventsParticipants();
         trips.add(this);
     }
 
@@ -67,6 +67,12 @@ public class TripEventJpa {
         TripEventTypePropertiesJpa property = TripEventTypePropertiesJpa.builder().propertyKey(key).propertyValue(value).tripEventJpa(this).build();
         properties.add(property);
     }
+
+    public void removeParticipants(UserEventParticipantsJpa user) {
+        participants.remove(user);
+        user.getTripEventsParticipants().remove(this);
+    }
+
 
     @Override
     public boolean equals(Object o) {

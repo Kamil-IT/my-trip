@@ -68,7 +68,7 @@ export class EventService implements ParticipantManagment {
   }
 
   getAllParticipantsEmail(parentId: string): Observable<string[]> {
-    return this.getTripById(parentId).pipe(map((trip: Event) => trip.participantEmails));
+    return this.getTripById(parentId).pipe(map((trip: Event) => trip.participants));
   }
 
 }

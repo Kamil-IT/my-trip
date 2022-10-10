@@ -38,6 +38,12 @@ export class EventNewComponent implements OnInit {
       type: this.eventType,
       properties: this.properties,
     })
+    this.title = '';
+    this.locationDescription = '';
+    this.from = '';
+    this.to = '';
+    this.eventType = '';
+    this.properties = [];
   }
 
   onPropertyAdded(property: Map<string, string>) {

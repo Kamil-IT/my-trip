@@ -7,7 +7,7 @@ import {UserService} from "../../../../user/service/UserService";
 import {User} from "../../../../user/model/User";
 
 @Component({
-  selector: 'app-trip-participant',
+  selector: 'app-participant',
   templateUrl: './participant.component.html',
   styleUrls: ['./participant.component.scss']
 })
@@ -36,9 +36,6 @@ export class ParticipantComponent implements OnInit {
   @Input()
   participantEmail: string = '';
 
-  @Input()
-  isExisingParticipant: boolean = false;
-
   constructor(private formBuilder: FormBuilder,
               private readonly userService: UserService) {
   }
@@ -47,7 +44,6 @@ export class ParticipantComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.participantEmail)
     let addParticipantModel = {
       email: this.participantEmail,
       uuid: this.parentId
@@ -70,7 +66,6 @@ export class ParticipantComponent implements OnInit {
 
   private getAllParticipantsFromCache() {
     let email = this.participantEmail;
-    console.log(email)
     if (this.participantEmails) {
       return this.participantEmails;
     }

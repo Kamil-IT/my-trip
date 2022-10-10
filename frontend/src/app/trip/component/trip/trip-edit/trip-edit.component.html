@@ -45,15 +45,15 @@
 
     <h5>Participants:</h5>
     <div *ngFor="let participantEmail of trip?.participantsEmails">
-      <app-trip-participant [participantEmail]="participantEmail" [parentId]="trip.uuid" [participantManagement]="tripService"
-                            [isExisingParticipant]="true"></app-trip-participant>
+      <app-participant [participantEmail]="participantEmail" [parentId]="trip.uuid"
+                       [participantManagement]="tripService"></app-participant>
     </div>
     <div *ngIf="trip?.uuid">
-      <app-trip-participant [parentId]="trip.uuid" [participantManagement]="tripService"></app-trip-participant>
+      <app-participant [parentId]="trip.uuid" [participantManagement]="tripService"></app-participant>
     </div>
 
     <h5>Events in trip:</h5>
-    <div *ngFor="let event of (tripResponse$ | async)?.events">
+    <div *ngFor="let event of trip?.events">
       <div class="row-trip-inside">
         <app-event-edit [event]="event"></app-event-edit>
       </div>

@@ -3,6 +3,7 @@ package com.mytrip.demo.application.port.in.trip.mapper;
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
 import com.mytrip.demo.application.persistance.trip.event.properties.TripEventTypePropertiesJpa;
+import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.domain.Event;
@@ -12,6 +13,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(imports = EventMapper.class, componentModel = "spring")
@@ -26,8 +28,12 @@ public interface TripMapper {
 
     List<Trip> toDomain(List<TripJpa> trip);
 
-    default List<String> toEmailList(List<UserTripParticipantsJpa> users) {
+    default List<String> toEmailTripList(List<UserTripParticipantsJpa> users) {
         return users.stream().map(UserTripParticipantsJpa::getEmail).collect(Collectors.toList());
+    }
+
+    default List<String> toEmailEventList(Set<UserEventParticipantsJpa> users) {
+        return users.stream().map(UserEventParticipantsJpa::getEmail).collect(Collectors.toList());
     }
 
     default Map<String, String> toDomainProperties(List<TripEventTypePropertiesJpa> properties){
@@ -35,7 +41,6 @@ public interface TripMapper {
                 .collect(Collectors.toMap(TripEventTypePropertiesJpa::getPropertyKey, TripEventTypePropertiesJpa::getPropertyValue));
     }
 
-    @Mapping(target = "location", ignore = true)
 //    @Mapping(target = "LocationDetails.latitude", source = "latitude")
 //    @Mapping(target = "LocationDetails.longitude", source = "longitude")
 //    @Mapping(target = "LocationDetails.locationDescription", source = "locationDescription")
@@ -43,5 +48,10 @@ public interface TripMapper {
     @Mapping(target = "to", source = "endDate")
     @Mapping(target = "creatorEmail", source = "creator")
     @Mapping(target = "eventType", source = "tripType")
+    @Mapping(target = "location", source = "locationDescription")
     Event toDomain(TripEventJpa event);
+
+    default Event.LocationDetails toDomain(String locationDescription) {
+        return Event.LocationDetails.builder().locationDescription(locationDescription).build();
+    }
 }

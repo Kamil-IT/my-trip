@@ -20,6 +20,7 @@ public class Event {
     String creatorEmail;
     TripEventTypeName eventType;
     Map<String, String> properties;
+    List<String> participants;
 
     @Value
     @Builder

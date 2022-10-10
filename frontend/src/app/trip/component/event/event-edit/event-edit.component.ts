@@ -17,11 +17,11 @@ export class EventEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getParticipantEmails() {
-    if (this.event) {
-      return ['', ...this.event?.participantEmails]
+  getParticipantEmails(): string[] {
+    if (this.event && this.event.participants) {
+      return [...this.event.participants, '']
     }
-    return [];
+    return [''];
   }
 
 

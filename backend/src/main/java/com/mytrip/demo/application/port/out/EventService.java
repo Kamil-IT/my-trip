@@ -7,6 +7,7 @@ import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
 import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.UserJpa;
+import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateEventDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,7 @@ public class EventService {
         UserEventParticipantsJpa user = userService.getEventParticipantById(email);
 
         event.addParticipants(user);
+        repository.save(event);
     }
 
     public void addProperty(String key, String value, UUID eventUuid) {
@@ -71,5 +73,13 @@ public class EventService {
     private TripEventJpa findByUuid(UUID eventUuid) {
         return repository.findByUuid(eventUuid)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public void deleteParticipant(UUID eventUuid, String email) {
+        TripEventJpa event = findByUuid(eventUuid);
+        UserEventParticipantsJpa user = userService.getEventParticipantById(email);
+
+        event.removeParticipants(user);
+        repository.save(event);
     }
 }
