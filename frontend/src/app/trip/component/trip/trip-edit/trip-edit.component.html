@@ -45,10 +45,12 @@
 
     <h5>Participants:</h5>
     <div *ngFor="let participantEmail of trip?.participantsEmails">
-      <app-trip-participant [participantEmail]="participantEmail" [tripId]="trip.uuid"
+      <app-trip-participant [participantEmail]="participantEmail" [parentId]="trip.uuid" [participantManagement]="tripService"
                             [isExisingParticipant]="true"></app-trip-participant>
     </div>
-    <app-trip-participant [tripId]="trip.uuid"></app-trip-participant>
+    <div *ngIf="trip?.uuid">
+      <app-trip-participant [parentId]="trip.uuid" [participantManagement]="tripService"></app-trip-participant>
+    </div>
 
     <h5>Events in trip:</h5>
     <div *ngFor="let event of (tripResponse$ | async)?.events">

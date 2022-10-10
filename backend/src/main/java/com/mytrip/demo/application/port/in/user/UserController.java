@@ -10,6 +10,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RequiredArgsConstructor
+@CrossOrigin
 @RestController
 @RequestMapping("/v1")
 public class UserController {

@@ -1,1 +1,8 @@
-<p>user-overview works!</p>
+<div *ngFor="let user of users | async">
+
+  <app-user-detail [email]="user.email" [password]="user.password"></app-user-detail>
+
+</div>
+
+<app-user-detail></app-user-detail>
+

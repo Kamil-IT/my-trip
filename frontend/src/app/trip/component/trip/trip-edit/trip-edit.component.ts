@@ -19,7 +19,7 @@ export class TripEditComponent implements OnInit {
   to: string = '';
 
   constructor(private route: ActivatedRoute,
-              private readonly tripService: TripService) {
+              readonly tripService: TripService) {
     this.tripId = this.route.snapshot.params['id']
 
     this.tripResponse$ = tripService.getTripById(this.tripId);

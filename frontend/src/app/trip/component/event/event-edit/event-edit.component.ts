@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../model/Event";
+import {EventService} from "../../../services/EventService";
 
 @Component({
   selector: 'app-event-edit',
@@ -11,7 +12,7 @@ export class EventEditComponent implements OnInit {
   @Input()
   event: Event | undefined;
 
-  constructor() { }
+  constructor(readonly eventService: EventService) { }
 
   ngOnInit(): void {
   }

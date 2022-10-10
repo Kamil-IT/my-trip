@@ -1,9 +1,12 @@
 <form [formGroup]="participantForm" class="d-flex flex-row">
 
   <div class="p-2">
-    <label for="email">email</label>
-    <input name="email" id="email" [(ngModel)]="participantEmail" [ngModelOptions]="{standalone: true}"
-           class="form-control"/>
+    <label for="email">email:</label>
+    <select name="email" id="email" class="form-select" aria-label="Select event type" [(ngModel)]="participantEmail"
+            [value]="participantEmail">
+      <option *ngFor="let email of getAllParticipants() | async">{{email}}</option>
+      <option></option>
+    </select>
   </div>
 
   <div class="p-2">

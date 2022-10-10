@@ -21,8 +21,10 @@ import { EventEditComponent } from './trip/component/event/event-edit/event-edit
 import { EventNewComponent } from './trip/component/event/event-new/event-new.component';
 import { PropertyEditComponent } from './trip/component/event/property/property-edit/property-edit.component';
 import { PropertyNewComponent } from './trip/component/event/property/property-new/property-new.component';
-import { TripParticipantComponent } from './trip/component/trip/trip-participant/trip-participant.component';
+import { ParticipantComponent } from './trip/component/trip/trip-participant/participant.component';
 import {EventService} from "./trip/services/EventService";
+import { UserDetailComponent } from './user/component/user-detail/user-detail.component';
+import {UserService} from "./user/service/UserService";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {EventService} from "./trip/services/EventService";
     EventNewComponent,
     PropertyEditComponent,
     PropertyNewComponent,
-    TripParticipantComponent
+    ParticipantComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import {EventService} from "./trip/services/EventService";
       {path: '', redirectTo: '/home', pathMatch: 'full'},
       {path: 'home', component: TripOverviewComponent},
       {path: 'trip/:id', component: TripEditComponent},
+      {path: 'user', component: UserOverviewComponent},
       // {path: 'user', component: TripEditComponent},
 
     ]),
@@ -57,7 +61,7 @@ import {EventService} from "./trip/services/EventService";
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [TripService, EventService, HttpClient],
+  providers: [TripService, EventService, UserService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

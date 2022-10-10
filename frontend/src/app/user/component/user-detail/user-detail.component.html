@@ -1,0 +1,19 @@
+<form class="container row-trip">
+
+
+  <div class="p-2">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" class="form-control" [value]="email" [(ngModel)]="email">
+  </div>
+
+
+  <div class="p-2">
+    <label for="password">Password:</label>
+    <input type="text" id="password" name="password" class="form-control" [value]="password" [(ngModel)]="password">
+  </div>
+
+  <div class="p-2">
+    <button (click)="save()" class="btn btn-light">Save</button>
+  </div>
+
+</form>

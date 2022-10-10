@@ -1,12 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AddParticipantModel, CreateTripRequestModel, Trip, TripsResponse, UpdateTripRequestModel} from "../model/Trip";
-import {BehaviorSubject, Observable} from "rxjs";
+import {AddParticipantModel, Trip, TripsResponse} from "../model/Trip";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {CreateEvent, Event} from "../model/Event";
 import {TripService} from "./TripService";
+import {ParticipantManagment} from "./ParticipantManagment";
 
 @Injectable()
-export class EventService {
+export class EventService implements ParticipantManagment {
 
   private readonly BASE_URL = 'http://localhost:8080/v1/trip/event';
 
@@ -42,6 +43,32 @@ export class EventService {
 
   private populateNewTrips(): void {
     this.eventService.populateNewTrips();
+  }
+
+  addParticipant(addParticipantModel: AddParticipantModel): void {
+    // Custom response for error
+    let tripsResponse = this.http.post<TripsResponse>(this.BASE_URL + '/participant', addParticipantModel);
+    tripsResponse.subscribe(() => this.populateNewTrips())
+  }
+
+  removeParticipant(addParticipantModel: AddParticipantModel): void {
+    // Custom response for error
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: addParticipantModel,
+    };
+    let tripsResponse = this.http.delete<TripsResponse>(this.BASE_URL + '/participant', options);
+    tripsResponse.subscribe(() => this.populateNewTrips())
+  }
+
+  private getTripById(eventId: string): Observable<Event> {
+    return this.http.get<Event>(this.BASE_URL + '/' + eventId);
+  }
+
+  getAllParticipantsEmail(parentId: string): Observable<string[]> {
+    return this.getTripById(parentId).pipe(map((trip: Event) => trip.participantEmails));
   }
 
 }
