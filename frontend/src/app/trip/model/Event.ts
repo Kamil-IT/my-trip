@@ -1,3 +1,5 @@
+import {KeyValue} from "@angular/common";
+
 export interface LocationDescription {
   locationDescription: string;
 }
@@ -15,7 +17,7 @@ export interface Event {
   to: string;
   from: string;
   title: string;
-  properties: Map<string, string>;
+  properties: Property[];
   participants: string[];
 }
 
@@ -27,4 +29,11 @@ export interface CreateEvent {
   to: string;
   type: string;
   properties: Map<string, string>[];
+}
+
+export interface UpdateEvent {
+  locationDescription: string;
+  from: string;
+  to: string;
+  title: string;
 }

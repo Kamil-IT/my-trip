@@ -9,13 +9,12 @@ import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateEventDto;
+import com.mytrip.demo.application.port.in.trip.model.UpdateEventDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +50,7 @@ public class EventService {
         eventCreated.setTrip(trip);
         eventCreated.getTrip().addEvent(eventCreated);
         eventCreated.addParticipants(user);
-        eventCreated.setProperties(new ArrayList<>());
+        eventCreated.setProperties(new HashSet<>());
 //        trip.addEvent(eventCreated);
         repository.save(eventCreated);
         return eventCreated;
@@ -80,6 +79,20 @@ public class EventService {
         UserEventParticipantsJpa user = userService.getEventParticipantById(email);
 
         event.removeParticipants(user);
+        repository.save(event);
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        repository.deleteByUuid(id);
+    }
+
+    public void update(UUID id, UpdateEventDto updateEventDto) {
+        TripEventJpa event = findByUuid(id);
+        event.setStartDate(updateEventDto.getFrom());
+        event.setEndDate(updateEventDto.getTo());
+        event.setTitle(updateEventDto.getTitle());
+        event.setLocationDescription(updateEventDto.getLocationDescription());
         repository.save(event);
     }
 }

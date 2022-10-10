@@ -55,7 +55,7 @@ public class TripEventJpa {
     private TripEventTypeName tripType;
     @OneToMany(mappedBy = "tripEventJpa")
     @ToString.Exclude
-    private List<TripEventTypePropertiesJpa> properties = new ArrayList<>();
+    private Set<TripEventTypePropertiesJpa> properties = new HashSet<>();
 
     public void addParticipants(UserEventParticipantsJpa user) {
         participants.add(user);

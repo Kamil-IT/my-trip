@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {KeyValue} from "@angular/common";
+import {Property} from "../../../../model/Event";
 
 @Component({
   selector: 'app-property-edit',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyEditComponent implements OnInit {
 
+  @Input()
+  property: Property = {key: "", value: ""};
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  save() {
+
+  }
 }

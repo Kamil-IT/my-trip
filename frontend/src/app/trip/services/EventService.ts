@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AddParticipantModel, Trip, TripsResponse} from "../model/Trip";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {CreateEvent, Event} from "../model/Event";
+import {CreateEvent, Event, UpdateEvent} from "../model/Event";
 import {TripService} from "./TripService";
 import {ParticipantManagment} from "./ParticipantManagment";
 
@@ -71,4 +71,13 @@ export class EventService implements ParticipantManagment {
     return this.getTripById(parentId).pipe(map((trip: Event) => trip.participants));
   }
 
+  removeEvent(eventId: string) {
+    this.http.delete<Event>(this.BASE_URL + '/' + eventId)
+      .subscribe(() => this.populateNewTrips());
+  }
+
+  updateEvent(eventId: string, updateEvent: UpdateEvent) {
+    this.http.post<Event>(this.BASE_URL + '/' + eventId, updateEvent)
+      .subscribe(() => this.populateNewTrips())
+  }
 }

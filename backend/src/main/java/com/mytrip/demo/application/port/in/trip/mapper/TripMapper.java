@@ -13,6 +13,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,12 +37,12 @@ public interface TripMapper {
         return users.stream().map(UserEventParticipantsJpa::getEmail).collect(Collectors.toList());
     }
 
-    default Map<String, String> toDomainProperties(List<TripEventTypePropertiesJpa> properties){
+    default Map<String, String> toDomainProperties(List<TripEventTypePropertiesJpa> properties) {
         return properties.stream()
                 .collect(Collectors.toMap(TripEventTypePropertiesJpa::getPropertyKey, TripEventTypePropertiesJpa::getPropertyValue));
     }
 
-//    @Mapping(target = "LocationDetails.latitude", source = "latitude")
+    //    @Mapping(target = "LocationDetails.latitude", source = "latitude")
 //    @Mapping(target = "LocationDetails.longitude", source = "longitude")
 //    @Mapping(target = "LocationDetails.locationDescription", source = "locationDescription")
     @Mapping(target = "from", source = "startDate")
@@ -53,5 +54,12 @@ public interface TripMapper {
 
     default Event.LocationDetails toDomain(String locationDescription) {
         return Event.LocationDetails.builder().locationDescription(locationDescription).build();
+    }
+
+    default Event.Property toDomain(TripEventTypePropertiesJpa propertiesJpa) {
+        return Event.Property.builder()
+                .key(propertiesJpa.getPropertyKey())
+                .value(propertiesJpa.getPropertyValue())
+                .build();
     }
 }

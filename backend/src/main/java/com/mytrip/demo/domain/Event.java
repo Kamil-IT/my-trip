@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Value
 @Builder
@@ -19,7 +17,7 @@ public class Event {
     LocationDetails location;
     String creatorEmail;
     TripEventTypeName eventType;
-    Map<String, String> properties;
+    Set<Property> properties;
     List<String> participants;
 
     @Value
@@ -29,5 +27,12 @@ public class Event {
         Double latitude;
         Double longitude;
         String locationDescription;
+    }
+
+    @Value
+    @Builder
+    public static class Property {
+        String key;
+        String value;
     }
 }

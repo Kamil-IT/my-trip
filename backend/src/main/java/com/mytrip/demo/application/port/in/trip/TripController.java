@@ -76,6 +76,20 @@ public class TripController {
         return tripMapper.toDomain(eventService.create(event, "email@gamil.com"));
     }
 
+    @DeleteMapping("/trip/event/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable UUID id) {
+//        From spring security get user
+        eventService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/trip/event/{id}")
+    public ResponseEntity<Void> updateEvent(@PathVariable UUID id, @Valid @RequestBody UpdateEventDto updateEventDto) {
+//        From spring security get user
+        eventService.update(id, updateEventDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/trip/event/participant")
     public ResponseEntity<Void> addEventParticipant(@RequestBody @Valid AddParticipantDto participant) {
 //        From spring security get user

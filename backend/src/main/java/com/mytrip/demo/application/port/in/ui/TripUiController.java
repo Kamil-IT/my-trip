@@ -14,46 +14,46 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.util.*;
 
-@RequiredArgsConstructor
-@Controller
+//@RequiredArgsConstructor
+//@Controller
 public class TripUiController {
 
-    private final TripService tripService;
-
-    @GetMapping(path = {"/index", "/", "", "/trip"})
-    public ModelAndView trips() {
-        List<TripJpa> tripsFromDb = tripService.getAll();
-
-        List<Trip> trips = Arrays.asList(getTripToBarcelona(), getTripToBarcelona(), getTripToBarcelona());
-
-        ModelAndView mav = new ModelAndView("triplist");
-        mav.addObject("trips", trips);
-
-        return mav;
-    }
-
-    @GetMapping(path = {"/trip/{id}"})
-    public ModelAndView trip(@PathVariable UUID id) {
-//        TripJpa tripFromDb = tripService.getById(id);
-
-        ModelAndView mav = new ModelAndView("tripedit");
-        mav.addObject("trip", getTripToBarcelona());
-
-        return mav;
-    }
-
-    public static Trip getTripToBarcelona() {
-        List<Event> events = Arrays.asList(Event.builder().title("Accomodation").from(LocalDate.now()
-                .plusDays(2)).to(LocalDate.now().plusDays(3))
-                .location(Event.LocationDetails.builder().latitude(23d).longitude(45d)
-                        .locationDescription("Barcelona").build())
-                .creatorEmail("admin@admin.com").eventType(TripEventTypeName.ACCOMMODATION)
-                .properties(Map.of("test", "test")).build());
-        return Trip.builder().uuid(UUID.randomUUID()).title("Trip to barcelona")
-                .creatorEmail("ex@emil.com")
-                .from(LocalDate.now().plusDays(2)).to(LocalDate.now().plusDays(4))
-                .participantsEmails(Arrays.asList("rand@email.com", "nice@mail.com"))
-                .events(events).build();
-    }
+//    private final TripService tripService;
+//
+//    @GetMapping(path = {"/index", "/", "", "/trip"})
+//    public ModelAndView trips() {
+//        List<TripJpa> tripsFromDb = tripService.getAll();
+//
+//        List<Trip> trips = Arrays.asList(getTripToBarcelona(), getTripToBarcelona(), getTripToBarcelona());
+//
+//        ModelAndView mav = new ModelAndView("triplist");
+//        mav.addObject("trips", trips);
+//
+//        return mav;
+//    }
+//
+//    @GetMapping(path = {"/trip/{id}"})
+//    public ModelAndView trip(@PathVariable UUID id) {
+////        TripJpa tripFromDb = tripService.getById(id);
+//
+//        ModelAndView mav = new ModelAndView("tripedit");
+//        mav.addObject("trip", getTripToBarcelona());
+//
+//        return mav;
+//    }
+//
+//    public static Trip getTripToBarcelona() {
+//        List<Event> events = Arrays.asList(Event.builder().title("Accomodation").from(LocalDate.now()
+//                .plusDays(2)).to(LocalDate.now().plusDays(3))
+//                .location(Event.LocationDetails.builder().latitude(23d).longitude(45d)
+//                        .locationDescription("Barcelona").build())
+//                .creatorEmail("admin@admin.com").eventType(TripEventTypeName.ACCOMMODATION)
+//                .properties(Map.of("test", "test")).build());
+//        return Trip.builder().uuid(UUID.randomUUID()).title("Trip to barcelona")
+//                .creatorEmail("ex@emil.com")
+//                .from(LocalDate.now().plusDays(2)).to(LocalDate.now().plusDays(4))
+//                .participantsEmails(Arrays.asList("rand@email.com", "nice@mail.com"))
+//                .events(events).build();
+//    }
 
 }

@@ -2,18 +2,14 @@
 
   <div class="p-2">
     <label for="key">key</label>
-    <input type="text" id="key" name="key" th:value="${property.key}"
+    <input type="text" id="key" name="key" [(ngModel)]="property.key"
            class="form-control">
   </div>
 
   <div class="p-2">
     <label for="value">value</label>
-    <input type="text" id="value" name="value" th:value="${property.value}"
+    <input type="text" id="value" name="value" [(ngModel)]="property.value"
            class="form-control">
-  </div>
-
-  <div class="p-2">
-    <button class="btn btn-light">Save</button>
   </div>
 
 

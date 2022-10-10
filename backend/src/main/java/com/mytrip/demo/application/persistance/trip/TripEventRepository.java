@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface TripEventRepository extends JpaRepository<TripEventJpa, Long> {
 
     Optional<TripEventJpa> findByUuid(UUID uuid);
+
+    void deleteByUuid(UUID uuid);
 }
