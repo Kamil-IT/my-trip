@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AddParticipantModel, CreateTripRequestModel, Trip, TripsResponse, UpdateTripRequestModel} from "../model/Trip";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {ParticipantManagment} from "./ParticipantManagment";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class TripService implements ParticipantManagment {
@@ -11,7 +12,8 @@ export class TripService implements ParticipantManagment {
 
   private readonly tripsSubject = new BehaviorSubject<TripsResponse>({trips: []});
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient,
+              private router: Router) {
   }
 
   getAllParticipantsEmail(parentId: string): Observable<string[]> {
@@ -89,4 +91,10 @@ export class TripService implements ParticipantManagment {
     })
   }
 
+  deleteTrip(tripId: string) {
+    this.http.delete<TripsResponse>(this.BASE_URL + '/' + tripId).subscribe(res => {
+      this.tripsSubject.next(res);
+      this.router.navigate(['/']);
+    })
+  }
 }

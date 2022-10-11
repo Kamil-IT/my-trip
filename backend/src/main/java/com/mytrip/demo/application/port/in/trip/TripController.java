@@ -54,6 +54,13 @@ public class TripController {
         return tripMapper.toDomain(tripService.update(trip));
     }
 
+    @DeleteMapping("/trip/{id}")
+    public ResponseEntity<Void> updateTrip(@PathVariable UUID id) {
+//        From spring security get user
+        tripService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/trip/participant")
     public ResponseEntity<Void> addTripParticipant(@RequestBody @Valid AddParticipantDto participant) {
 //        From spring security get user

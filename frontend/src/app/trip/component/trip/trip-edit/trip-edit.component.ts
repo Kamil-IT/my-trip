@@ -38,4 +38,8 @@ export class TripEditComponent implements OnInit {
     this.tripService.updateTrip({uuid: this.tripId, title: this.title, from: this.from, to: this.to})
       .subscribe(trp => console.log(trp))
   }
+
+  remove() {
+    this.tripService.deleteTrip(this.tripId);
+  }
 }
