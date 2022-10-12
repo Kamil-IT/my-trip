@@ -30,7 +30,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @GetMapping("/user")
     public List<User> getUsers() {
         return userMapper.toDomain(userService.getAll());

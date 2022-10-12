@@ -4,6 +4,7 @@ import {TripsResponse} from "../../../model/Trip";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../../../core/service/AuthService";
 import {Router} from "@angular/router";
+import {CurrentUserPrivilegesService} from "../../../../core/service/CurrentUserPrivilegesService";
 
 @Component({
   selector: 'app-trip-overview',
@@ -17,7 +18,8 @@ export class TripOverviewComponent implements OnInit {
   constructor(private readonly tripService: TripService,
               private readonly http: HttpClient,
               private readonly authService: AuthService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              readonly currentUser: CurrentUserPrivilegesService) {
     this.authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
 
     tripService.getTrips().subscribe(response => {

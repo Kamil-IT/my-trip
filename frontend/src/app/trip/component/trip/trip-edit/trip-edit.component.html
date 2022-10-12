@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-light" (click)="save()">Save</button>
+      <button type="submit" class="btn btn-light" [disabled]="!currentUser.isAdmin()" (click)="save()">Save</button>
 
 
     </form>
@@ -65,7 +65,7 @@
   </div>
 
   <div class="p-2">
-    <button type="submit" class="btn btn-danger" (click)="remove()">remove</button>
+    <button type="submit" class="btn btn-danger" (click)="remove()" [disabled]="!currentUser.isAdmin()">remove</button>
   </div>
 
 </div>

@@ -29,6 +29,7 @@ import { LoginComponent } from './core/component/login/login.component';
 import {AuthService} from "./core/service/AuthService";
 import {HeaderService} from "./core/service/HeaderService";
 import { ProfileOverviewComponent } from './user/component/profile/profile-overview/profile-overview.component';
+import {CurrentUserPrivilegesService} from "./core/service/CurrentUserPrivilegesService";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import { ProfileOverviewComponent } from './user/component/profile/profile-overv
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [AuthService, HeaderService, TripService, EventService, UserService, HttpClient],
+  providers: [AuthService, HeaderService, TripService, EventService, UserService, HttpClient, CurrentUserPrivilegesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

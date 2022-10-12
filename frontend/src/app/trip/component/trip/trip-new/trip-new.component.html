@@ -19,7 +19,7 @@
 
       <div class="w-100"></div>
 
-      <input type="submit" value="Create" class="btn btn-light" style="margin-top: 1rem">
+      <input type="submit" value="Create" [disabled]="!currentUser.isAdmin()" class="btn btn-light" style="margin-top: 1rem">
 
 
     </form>

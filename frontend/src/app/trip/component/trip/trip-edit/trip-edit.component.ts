@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TripService} from "../../../services/TripService";
 import {Observable} from "rxjs";
 import {Trip} from "../../../model/Trip";
+import {CurrentUserPrivilegesService} from "../../../../core/service/CurrentUserPrivilegesService";
+import {AuthService} from "../../../../core/service/AuthService";
 
 @Component({
   selector: 'app-trip-edit',
@@ -20,7 +22,10 @@ export class TripEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               readonly tripService: TripService,
-              readonly router: Router) {
+              readonly router: Router,
+              readonly currentUser: CurrentUserPrivilegesService,
+              readonly authService: AuthService) {
+    this.authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
     this.tripId = this.route.snapshot.params['id']
 
     this.tripResponse$ = tripService.getTripById(this.tripId);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {TripService} from "../../../services/TripService";
 import {CreateTripRequestModel} from "../../../model/Trip";
+import {CurrentUserPrivilegesService} from "../../../../core/service/CurrentUserPrivilegesService";
 
 @Component({
   selector: 'app-trip-new',
@@ -17,7 +18,8 @@ export class TripNewComponent implements OnInit {
   });
 
   constructor(private readonly tripService: TripService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              readonly currentUser: CurrentUserPrivilegesService) { }
 
   ngOnInit(): void {
   }

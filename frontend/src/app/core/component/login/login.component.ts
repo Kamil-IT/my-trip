@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../service/AuthService";
 import {Router} from "@angular/router";
+import {CurrentUserPrivilegesService} from "../../service/CurrentUserPrivilegesService";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
   constructor(private readonly authService: AuthService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly currentUser: CurrentUserPrivilegesService) {
     authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
   }
 
@@ -21,16 +23,21 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.authorizeUser(this.email, this.password)
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() => this.redirectToHome());
   }
 
   createAccount() {
     this.authService.createUser(this.email, this.password)
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() => this.redirectToHome());
   }
 
   createAdminAccount() {
     this.authService.createAdminUser(this.email, this.password)
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() => this.redirectToHome());
+  }
+
+  private redirectToHome() {
+    this.router.navigate(['/'])
+    this.currentUser.refreshUser()
   }
 }

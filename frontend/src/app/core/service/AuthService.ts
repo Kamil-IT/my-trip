@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {User} from "../../user/model/User";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {CurrentUserPrivilegesService} from "./CurrentUserPrivilegesService";
 
 @Injectable()
 export class AuthService {

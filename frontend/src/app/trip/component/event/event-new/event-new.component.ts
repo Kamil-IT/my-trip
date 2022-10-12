@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Event, Property} from "../../../model/Event";
 import {EventService} from "../../../services/EventService";
+import {CurrentUserPrivilegesService} from "../../../../core/service/CurrentUserPrivilegesService";
 
 @Component({
   selector: 'app-event-new',
@@ -22,7 +23,8 @@ export class EventNewComponent implements OnInit {
   locationDescription = '';
   eventType = '';
 
-  constructor(private readonly eventService: EventService) {
+  constructor(private readonly eventService: EventService,
+              readonly currentUser: CurrentUserPrivilegesService) {
   }
 
   ngOnInit(): void {
