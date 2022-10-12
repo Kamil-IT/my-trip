@@ -1,25 +1,39 @@
 package com.mytrip.demo.application.persistance.user;
 
-import com.mytrip.demo.application.persistance.trip.TripJpa;
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @RequiredArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
 @Entity()
 @Table(name = "user_app")
-public class UserJpa {
+public class UserJpa implements GrantedAuthority {
 
     @Id
     private String email;
     private String password;
+    private String authority = "USER";
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserJpa userJpa = (UserJpa) o;
+        return email != null && Objects.equals(email, userJpa.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

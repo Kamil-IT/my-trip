@@ -1,12 +1,16 @@
 package com.mytrip.demo.application.port.in.user;
 
 import com.mytrip.demo.application.persistance.user.UserJpa;
+import com.mytrip.demo.application.port.in.user.mapper.UserMapper;
 import com.mytrip.demo.application.port.out.UserService;
+import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,26 +19,29 @@ import java.util.List;
 @RequestMapping("/v1")
 public class UserController {
 
+    private final BCryptPasswordEncoder encoder;
+    private final UserMapper userMapper;
+
     @PostConstruct
     public void init(){
-        userService.createUser(UserJpa.builder().email("email@gamil.com").password("pass").build());
+        userService.createUser(User.builder().email("email@gamil.com").password("pass").build());
     }
 
     private final UserService userService;
 
 
     @GetMapping("/user")
-    public List<UserJpa> getUsers() {
-        return userService.getAll();
+    public List<User> getUsers() {
+        return userMapper.toDomain(userService.getAll());
     }
 
     @GetMapping("/user/{email}")
-    public UserJpa getUser(@PathVariable("email") String email) {
-        return userService.getById(email);
+    public User getUser(@PathVariable("email") String email) {
+        return userMapper.toDomain(userService.getById(email));
     }
 
     @PostMapping("/user")
-    public UserJpa createUser(@RequestBody UserJpa userJpa) {
-        return userService.createUser(userJpa);
+    public User createUser(@Valid @RequestBody User user) {
+        return userMapper.toDomain(userService.createUser(user));
     }
 }

@@ -12,6 +12,8 @@ import com.mytrip.demo.domain.Trip;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")
+@PreAuthorize("hasAuthority('USER')")
 public class TripController {
 
     private final TripService tripService;
@@ -37,13 +40,14 @@ public class TripController {
     }
 
     @GetMapping("/trip")
-    public GetTripsDto getTrips() {
+    public GetTripsDto getTrips(Authentication authentication) {
+        authentication.getName();
         List<TripJpa> all = tripService.getAll();
         return new GetTripsDto(tripMapper.toDomain(all));
     }
 
     @PostMapping("/trip")
-    public Trip addTrip(@RequestBody @Valid CreateTripDto trip) {
+    public Trip addTrip(@RequestBody @Valid CreateTripDto trip, Authentication authentication) {
 //        From spring security get user
         return tripMapper.toDomain(tripService.create(trip, "email@gamil.com"));
     }

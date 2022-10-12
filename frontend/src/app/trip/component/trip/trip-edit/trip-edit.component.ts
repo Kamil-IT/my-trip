@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {TripService} from "../../../services/TripService";
 import {Observable} from "rxjs";
 import {Trip} from "../../../model/Trip";
+import {RedirectService} from "../../../../core/service/RedirectService";
 
 @Component({
   selector: 'app-trip-edit',
@@ -19,7 +20,8 @@ export class TripEditComponent implements OnInit {
   to: string = '';
 
   constructor(private route: ActivatedRoute,
-              readonly tripService: TripService) {
+              readonly tripService: TripService,
+              readonly redirectService: RedirectService) {
     this.tripId = this.route.snapshot.params['id']
 
     this.tripResponse$ = tripService.getTripById(this.tripId);
@@ -40,6 +42,7 @@ export class TripEditComponent implements OnInit {
   }
 
   remove() {
-    this.tripService.deleteTrip(this.tripId);
+    this.tripService.deleteTrip(this.tripId)
+      .subscribe(() => this.redirectService.redirectHome());
   }
 }

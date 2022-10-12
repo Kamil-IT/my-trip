@@ -91,10 +91,12 @@ export class TripService implements ParticipantManagment {
     })
   }
 
-  deleteTrip(tripId: string) {
-    this.http.delete<TripsResponse>(this.BASE_URL + '/' + tripId).subscribe(res => {
+  deleteTrip(tripId: string): Observable<TripsResponse> {
+    let observable = this.http.delete<TripsResponse>(this.BASE_URL + '/' + tripId);
+    observable.subscribe(res => {
       this.tripsSubject.next(res);
-      this.router.navigate(['/']);
     })
+
+    return observable;
   }
 }

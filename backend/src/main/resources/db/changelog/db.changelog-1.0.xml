@@ -11,6 +11,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="password" type="VARCHAR(255)"/>
+            <column name="authority" type="VARCHAR(255)"/>
 <!--           TODO: Add spring model for user-->
         </createTable>
     </changeSet>

@@ -25,6 +25,10 @@ import { ParticipantComponent } from './trip/component/trip/trip-participant/par
 import {EventService} from "./trip/services/EventService";
 import { UserDetailComponent } from './user/component/user-detail/user-detail.component';
 import {UserService} from "./user/service/UserService";
+import { LoginComponent } from './core/component/login/login.component';
+import {AuthService} from "./core/service/AuthService";
+import {HeaderService} from "./core/service/HeaderService";
+import {RedirectService} from "./core/service/RedirectService";
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import {UserService} from "./user/service/UserService";
     PropertyEditComponent,
     PropertyNewComponent,
     ParticipantComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -53,15 +58,14 @@ import {UserService} from "./user/service/UserService";
       {path: 'home', component: TripOverviewComponent},
       {path: 'trip/:id', component: TripEditComponent},
       {path: 'user', component: UserOverviewComponent},
-      // {path: 'user', component: TripEditComponent},
-
+      {path: 'login', component: LoginComponent},
     ]),
     NgbModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [TripService, EventService, UserService, HttpClient],
+  providers: [RedirectService, AuthService, HeaderService, TripService, EventService, UserService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
