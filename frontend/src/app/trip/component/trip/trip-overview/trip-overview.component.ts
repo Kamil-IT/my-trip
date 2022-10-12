@@ -20,21 +20,6 @@ export class TripOverviewComponent implements OnInit {
               private readonly router: Router) {
     this.authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
 
-    // const headers = new HttpHeaders({
-    //   authorization : 'Basic ' + btoa('email@gamil.com' + ':' + 'pass'),
-    //   'Content-Type':  'application/json',
-    // });
-    // this.http.get<string>('http://localhost:8080/v1/trip', {headers: headers})
-    //   .subscribe(res => {
-    //     console.log("res")
-    //     console.log(res)
-    //     console.log(res)
-    //     console.log(res)
-    //     console.log(res)
-    //     console.log("res")
-    //
-    //   }, res => console.log(res))
-
     tripService.getTrips().subscribe(response => {
       this.tripResponse = response;
     });

@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {User} from "../model/User";
+import {HeaderService} from "../../core/service/HeaderService";
 
 @Injectable()
 export class UserService {
@@ -10,7 +11,8 @@ export class UserService {
 
   private readonly tripsSubject = new BehaviorSubject<User[]>([{email: '', password: ''}]);
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient,
+              private readonly headerService: HeaderService) {
   }
 
   getUsers(): Observable<User[]> {
@@ -25,11 +27,11 @@ export class UserService {
   }
 
   getUserById(tripId: string): Observable<User> {
-    return this.http.get<User>(this.BASE_URL + '/' + tripId);
+    return this.http.get<User>(this.BASE_URL + '/' + tripId, {headers: this.headerService.getHeaders()});
   }
 
   populateNewUsers(): void {
-    this.http.get<User[]>(this.BASE_URL).subscribe(res => {
+    this.http.get<User[]>(this.BASE_URL, {headers: this.headerService.getHeaders()}).subscribe(res => {
       this.tripsSubject.next(res);
     })
   }
