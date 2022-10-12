@@ -4,7 +4,6 @@ import {TripsResponse} from "../../../model/Trip";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../../../core/service/AuthService";
 import {Router} from "@angular/router";
-import {RedirectService} from "../../../../core/service/RedirectService";
 
 @Component({
   selector: 'app-trip-overview',
@@ -18,10 +17,8 @@ export class TripOverviewComponent implements OnInit {
   constructor(private readonly tripService: TripService,
               private readonly http: HttpClient,
               private readonly authService: AuthService,
-              private readonly redirectService: RedirectService) {
-    if (!this.authService.isUserAuthenticated()) {
-      redirectService.redirectLogin();
-    }
+              private readonly router: Router) {
+    this.authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
 
     // const headers = new HttpHeaders({
     //   authorization : 'Basic ' + btoa('email@gamil.com' + ':' + 'pass'),

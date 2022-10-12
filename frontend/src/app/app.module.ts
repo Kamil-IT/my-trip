@@ -28,7 +28,6 @@ import {UserService} from "./user/service/UserService";
 import { LoginComponent } from './core/component/login/login.component';
 import {AuthService} from "./core/service/AuthService";
 import {HeaderService} from "./core/service/HeaderService";
-import {RedirectService} from "./core/service/RedirectService";
 
 @NgModule({
   declarations: [
@@ -65,7 +64,7 @@ import {RedirectService} from "./core/service/RedirectService";
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [RedirectService, AuthService, HeaderService, TripService, EventService, UserService, HttpClient],
+  providers: [AuthService, HeaderService, TripService, EventService, UserService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TripService} from "../../../services/TripService";
 import {Observable} from "rxjs";
 import {Trip} from "../../../model/Trip";
-import {RedirectService} from "../../../../core/service/RedirectService";
 
 @Component({
   selector: 'app-trip-edit',
@@ -21,7 +20,7 @@ export class TripEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               readonly tripService: TripService,
-              readonly redirectService: RedirectService) {
+              readonly router: Router) {
     this.tripId = this.route.snapshot.params['id']
 
     this.tripResponse$ = tripService.getTripById(this.tripId);
@@ -43,6 +42,6 @@ export class TripEditComponent implements OnInit {
 
   remove() {
     this.tripService.deleteTrip(this.tripId)
-      .subscribe(() => this.redirectService.redirectHome());
+      .subscribe(() => this.router.navigate(['/']));
   }
 }

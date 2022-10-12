@@ -25,8 +25,8 @@ export class AuthService {
     return this.tryToLogIn();
   }
 
-  isUserAuthenticated(): boolean {
-    return this.email != '' && this.password != '';
+  tryLogin(success: () => void, error: () => void): void {
+    this.tryToLogIn().subscribe(success, error);
   }
 
   createUser(email: string, password: string): Observable<User> {
@@ -47,19 +47,17 @@ export class AuthService {
   }
 
   private tryToLogIn(): Observable<void> {
-    let observable = this.http.get<void>(this.CHECK_IS_USER_AUTHENTICATED_URL, {
+    return this.http.get<void>(this.CHECK_IS_USER_AUTHENTICATED_URL, {
       headers: new HttpHeaders({
         authorization: this.getUserDetailsHeaderAuth(),
         'Content-Type': 'application/json',
       })
     });
-    observable
-      .subscribe(() => {
-      }, () => {
-        this.email = '';
-        this.email = '';
-      });
+  }
 
-    return observable;
+  logout(afterLogout: () => void) {
+    this.email = '';
+    this.password = '';
+    afterLogout()
   }
 }

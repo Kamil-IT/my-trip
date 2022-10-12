@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../service/AuthService";
 import {Router} from "@angular/router";
-import {RedirectService} from "../../service/RedirectService";
 
 @Component({
   selector: 'app-login',
@@ -13,10 +12,8 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
   constructor(private readonly authService: AuthService,
-              private readonly redirectService: RedirectService) {
-    if (authService.isUserAuthenticated()) {
-      redirectService.redirectHome();
-    }
+              private readonly router: Router) {
+    authService.tryLogin(() => {}, () => this.router.navigate(['/login']));
   }
 
   ngOnInit(): void {
@@ -24,11 +21,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.authorizeUser(this.email, this.password)
-      .subscribe(() => this.redirectService.redirectHome());
+      .subscribe(() => this.router.navigate(['/']));
   }
 
   createAccount() {
     this.authService.createUser(this.email, this.password)
-      .subscribe(() => this.redirectService.redirectHome());
+      .subscribe(() => this.router.navigate(['/']));
   }
 }
