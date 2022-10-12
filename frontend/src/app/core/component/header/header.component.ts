@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toProfile(): void {
-    this.router.navigate(['/user'])
+    this.router.navigate(['/profile'])
   }
 
   toUsers(): void {

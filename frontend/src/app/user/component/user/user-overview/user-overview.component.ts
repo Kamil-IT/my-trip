@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserService} from "../../service/UserService";
-import {User} from "../../model/User";
+import {UserService} from "../../../service/UserService";
+import {User} from "../../../model/User";
 import {Observable} from "rxjs";
-import {AuthService} from "../../../core/service/AuthService";
+import {AuthService} from "../../../../core/service/AuthService";
 import {Router} from "@angular/router";
 
 @Component({

@@ -26,8 +26,8 @@ export class UserService {
     });
   }
 
-  getUserById(tripId: string): Observable<User> {
-    return this.http.get<User>(this.BASE_URL + '/' + tripId, {headers: this.headerService.getHeaders()});
+  getUserById(userId: string): Observable<User> {
+    return this.http.get<User>(this.BASE_URL + '/' + userId, {headers: this.headerService.getHeaders()});
   }
 
   populateNewUsers(): void {
@@ -36,4 +36,7 @@ export class UserService {
     })
   }
 
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(this.BASE_URL + '/current', {headers: this.headerService.getHeaders()});
+  }
 }

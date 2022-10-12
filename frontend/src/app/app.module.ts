@@ -13,7 +13,7 @@ import { EventOverviewComponent } from './trip/component/event/event-overview/ev
 import {RouterModule} from "@angular/router";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TripEditComponent } from './trip/component/trip/trip-edit/trip-edit.component';
-import { UserOverviewComponent } from './user/component/user-overview/user-overview.component';
+import { UserOverviewComponent } from './user/component/user/user-overview/user-overview.component';
 import {TripService} from "./trip/services/TripService";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -23,11 +23,12 @@ import { PropertyEditComponent } from './trip/component/event/property/property-
 import { PropertyNewComponent } from './trip/component/event/property/property-new/property-new.component';
 import { ParticipantComponent } from './trip/component/trip/trip-participant/participant.component';
 import {EventService} from "./trip/services/EventService";
-import { UserDetailComponent } from './user/component/user-detail/user-detail.component';
+import { UserDetailComponent } from './user/component/user/user-detail/user-detail.component';
 import {UserService} from "./user/service/UserService";
 import { LoginComponent } from './core/component/login/login.component';
 import {AuthService} from "./core/service/AuthService";
 import {HeaderService} from "./core/service/HeaderService";
+import { ProfileOverviewComponent } from './user/component/profile/profile-overview/profile-overview.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {HeaderService} from "./core/service/HeaderService";
     PropertyNewComponent,
     ParticipantComponent,
     UserDetailComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ import {HeaderService} from "./core/service/HeaderService";
       {path: 'trip/:id', component: TripEditComponent},
       {path: 'user', component: UserOverviewComponent},
       {path: 'login', component: LoginComponent},
+      {path: 'profile', component: ProfileOverviewComponent},
     ]),
     NgbModule,
     HttpClientModule,

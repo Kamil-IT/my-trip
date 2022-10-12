@@ -1,0 +1,3 @@
+<div *ngIf="(user | async) as user" style="margin-top: 10rem; margin-bottom: 10rem">
+  <app-user-detail [email]="user.email" [password]="user.password"></app-user-detail>
+</div>
