@@ -4,6 +4,7 @@ import com.mytrip.demo.application.port.in.user.mapper.UserMapper;
 import com.mytrip.demo.application.port.out.UserService;
 import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class UserController {
     private final UserService userService;
 
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user")
     public List<User> getUsers() {
         return userMapper.toDomain(userService.getAll());
@@ -34,12 +36,14 @@ public class UserController {
 
 
     @GetMapping("/user/current")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public User getCurrentUser(Authentication authentication) {
         String email = authentication.getName();
         return userMapper.toDomain(userService.getById(email));
     }
 
     @GetMapping("/user/{email}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public User getUser(@PathVariable("email") String email) {
         return userMapper.toDomain(userService.getById(email));
     }

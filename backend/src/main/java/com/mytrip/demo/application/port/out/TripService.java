@@ -3,7 +3,6 @@ package com.mytrip.demo.application.port.out;
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
-import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.UserJpa;
 import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -24,8 +23,10 @@ public class TripService {
 
     private final UserService userService;
 
-    public List<TripJpa> getAll(){
-        return repository.findAll();
+    public List<TripJpa> getAll(String email){
+        return repository.findAll().stream()
+                .filter(trip -> trip.getParticipants().stream().anyMatch(user -> user.getEmail().equals(email)))
+                .collect(Collectors.toList());
     }
 
     public TripJpa getById(UUID id){

@@ -1,8 +1,6 @@
 package com.mytrip.demo.application.port.in.trip;
 
 import com.mytrip.demo.application.persistance.trip.TripJpa;
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import com.mytrip.demo.application.port.in.trip.mapper.EventMapper;
 import com.mytrip.demo.application.port.in.trip.mapper.TripMapper;
 import com.mytrip.demo.application.port.in.trip.model.*;
 import com.mytrip.demo.application.port.out.EventService;
@@ -25,7 +23,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")
-@PreAuthorize("hasAuthority('USER')")
 public class TripController {
 
     private final TripService tripService;
@@ -33,48 +30,50 @@ public class TripController {
     private final EventService eventService;
 
 //    Trip
-
     @GetMapping("/trip/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public Trip getTrip(@PathVariable("id") UUID id) {
         return tripMapper.toDomain(tripService.getById(id));
     }
 
     @GetMapping("/trip")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public GetTripsDto getTrips(Authentication authentication) {
-        authentication.getName();
-        List<TripJpa> all = tripService.getAll();
+        String email = authentication.getName();
+        List<TripJpa> all = tripService.getAll(email);
         return new GetTripsDto(tripMapper.toDomain(all));
     }
 
     @PostMapping("/trip")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Trip addTrip(@RequestBody @Valid CreateTripDto trip, Authentication authentication) {
-//        From spring security get user
-        return tripMapper.toDomain(tripService.create(trip, "email@gamil.com"));
+        String email = authentication.getName();
+        return tripMapper.toDomain(tripService.create(trip, email));
     }
 
     @PutMapping("/trip")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Trip updateTrip(@RequestBody @Valid UpdateTripDto trip) {
-//        From spring security get user
         return tripMapper.toDomain(tripService.update(trip));
     }
 
     @DeleteMapping("/trip/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Void> updateTrip(@PathVariable UUID id) {
-//        From spring security get user
         tripService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/trip/participant")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addTripParticipant(@RequestBody @Valid AddParticipantDto participant) {
-//        From spring security get user
         tripService.addParticipants(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/trip/participant")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> removeTripParticipant(@RequestBody @Valid RemoveTripParticipantDto participant) {
-//        From spring security get user
         tripService.deleteParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -82,47 +81,49 @@ public class TripController {
 //    Event
 
     @PostMapping("/trip/event")
-    public Event addEvent(@RequestBody @Valid CreateEventDto event) {
-//        From spring security get user
-        return tripMapper.toDomain(eventService.create(event, "email@gamil.com"));
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public Event addEvent(@RequestBody @Valid CreateEventDto event, Authentication authentication) {
+        String email = authentication.getName();
+        return tripMapper.toDomain(eventService.create(event, email));
     }
 
     @DeleteMapping("/trip/event/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> deleteEvent(@PathVariable UUID id) {
-//        From spring security get user
         eventService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/trip/event/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> updateEvent(@PathVariable UUID id, @Valid @RequestBody UpdateEventDto updateEventDto) {
-//        From spring security get user
         eventService.update(id, updateEventDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/trip/event/participant")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addEventParticipant(@RequestBody @Valid AddParticipantDto participant) {
-//        From spring security get user
         eventService.addParticipants(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/trip/event/participant")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> removeEventParticipant(@RequestBody @Valid RemoveParticipantDto participant) {
-//        From spring security get user
         eventService.deleteParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/trip/event/property")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addEventProperty(@RequestBody @Valid AddEventPropertyDto property) {
-//        From spring security get user
         eventService.addProperty(property.getPropertyKey(), property.getPropertyValue(), property.getEventUuid());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/trip/event")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public Event getEvent(@PathParam("id") UUID id) {
         return tripMapper.toDomain(eventService.getEventById(id));
     }
