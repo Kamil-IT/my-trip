@@ -30,15 +30,25 @@ export class AuthService {
   }
 
   createUser(email: string, password: string): Observable<User> {
+    return this.createAccount(email, password, 'USER');
+  }
+
+  createAdminUser(email: string, password: string) {
+    return this.createAccount(email, password, 'ADMIN')
+  }
+
+  private createAccount(email: string, password: string, authority: string) {
     let userObservable = this.http.post<User>(
       this.CREATE_USER_URL,
       {
         email: email,
-        password: password
+        password: password,
+        authority: authority
       });
 
     userObservable
       .subscribe(() => {
+        console.log('account created')
         this.email = email;
         this.password = password;
       });

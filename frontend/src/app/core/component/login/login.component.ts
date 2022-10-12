@@ -28,4 +28,9 @@ export class LoginComponent implements OnInit {
     this.authService.createUser(this.email, this.password)
       .subscribe(() => this.router.navigate(['/']));
   }
+
+  createAdminAccount() {
+    this.authService.createAdminUser(this.email, this.password)
+      .subscribe(() => this.router.navigate(['/']));
+  }
 }

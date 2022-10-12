@@ -9,7 +9,7 @@ export class UserService {
 
   private readonly BASE_URL = 'http://localhost:8080/v1/user';
 
-  private readonly tripsSubject = new BehaviorSubject<User[]>([{email: '', password: ''}]);
+  private readonly tripsSubject = new BehaviorSubject<User[]>([{email: '', password: '', authorities: [{authority: ''}]}]);
 
   constructor(private readonly http: HttpClient,
               private readonly headerService: HeaderService) {
@@ -24,10 +24,6 @@ export class UserService {
     this.http.post<User>(this.BASE_URL, {email: email, password: password}).subscribe(res => {
       this.populateNewUsers()
     });
-  }
-
-  getUserById(userId: string): Observable<User> {
-    return this.http.get<User>(this.BASE_URL + '/' + userId, {headers: this.headerService.getHeaders()});
   }
 
   populateNewUsers(): void {

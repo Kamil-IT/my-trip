@@ -1,6 +1,7 @@
 package com.mytrip.demo.application.port.in.user;
 
 import com.mytrip.demo.application.port.in.user.mapper.UserMapper;
+import com.mytrip.demo.application.port.in.user.model.UserDto;
 import com.mytrip.demo.application.port.out.UserService;
 import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserController {
 
     @PostConstruct
     public void init(){
-        userService.createUser(User.builder().email("email@gamil.com").password("pass").build());
+        userService.createUser(UserDto.builder().email("email@gamil.com").authority("ADMIN").password("pass").build());
     }
 
     private final UserService userService;
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User createUser(@Valid @RequestBody User user) {
+    public User createUser(@Valid @RequestBody UserDto user) {
         return userMapper.toDomain(userService.createUser(user));
     }
 }

@@ -14,7 +14,7 @@ public class User implements UserDetails {
 
     String email;
     String password;
-    Collection<? extends GrantedAuthority> authorities;
+    Collection<? extends Authority> authorities;
     boolean accountNonExpired;
     boolean accountNonLocked;
     boolean credentialsNonExpired;
@@ -23,5 +23,11 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Value
+    @Builder
+    public static class Authority implements GrantedAuthority {
+        String authority;
     }
 }

@@ -1,8 +1,8 @@
 package com.mytrip.demo.application.port.out;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
-import com.mytrip.demo.application.persistance.trip.TripEventRepository;
 import com.mytrip.demo.application.persistance.user.*;
+import com.mytrip.demo.application.port.in.user.model.UserDto;
 import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,10 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.ReadOnlyFileSystemException;
 import java.util.*;
 
 @Service
@@ -41,11 +39,18 @@ public class UserService implements UserDetailsService {
         return usertripParticipantRepository.findByEmail(email).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public UserJpa createUser(User user) {
+    public UserJpa createUser(UserDto user) {
         String email = user.getEmail();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String grantedAuthority = user.getAuthority();
 
-        return userRepository.save(UserJpa.builder().email(email).password(encodedPassword).authority("USER").build());
+        UserJpa userToSave = UserJpa.builder()
+                .email(email)
+                .password(encodedPassword)
+                .authority(grantedAuthority)
+                .build();
+
+        return userRepository.save(userToSave);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class UserService implements UserDetailsService {
         return User.builder()
                 .password(userJpa.getPassword())
                 .email(userJpa.getEmail())
-                .authorities(List.of(userJpa))
+                .authorities(List.of(User.Authority.builder().authority(userJpa.getAuthority()).build()))
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .accountNonExpired(true)
