@@ -24,6 +24,7 @@ public class EventService {
     private final TripEventRepository repository;
     private final TripRepository repositoryTrip;
     private final GeocodingClient geocodingClient;
+    private final EventAdditionPropsService eventAdditionPropsService;
 
     private final UserService userService;
     private final TripService tripService;
@@ -52,10 +53,11 @@ public class EventService {
                 .tripType(event.getType())
                 .build();
 
+        eventAdditionPropsService.addAdditionalPropertiesToEvent(eventCreated);
+
         eventCreated.setTrip(trip);
         eventCreated.getTrip().addEvent(eventCreated);
         eventCreated.addParticipants(user);
-        eventCreated.setProperties(new HashSet<>());
         repository.save(eventCreated);
         return eventCreated;
     }

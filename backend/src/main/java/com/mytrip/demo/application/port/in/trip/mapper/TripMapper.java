@@ -50,7 +50,17 @@ public interface TripMapper {
     @Mapping(target = "creatorEmail", source = "creator")
     @Mapping(target = "eventType", source = "tripType")
     @Mapping(target = "location", source = "locationDescription")
+    @Mapping(target = "properties", source = "properties")
     Event toDomain(TripEventJpa event);
+
+    default Set<Event.Property> toDomain(Set<TripEventTypePropertiesJpa> properties) {
+        return properties.stream()
+                .map(property -> Event.Property.builder()
+                        .key(property.getPropertyKey())
+                        .value(property.getPropertyValue())
+                        .build())
+                .collect(Collectors.toSet());
+    }
 
     default Event.LocationDetails toDomain(String locationDescription) {
         return Event.LocationDetails.builder().locationDescription(locationDescription).build();

@@ -50,6 +50,12 @@
     <input type="text" id="locationDescription" name="locationDescription" class="form-control"
            value="{{event?.location?.locationDescription}}" [(ngModel)]="locationDescription">
   </div>
+  <div class="p-2">
+    <label>Weather:</label>
+  </div>
+  <div class="p-2">
+    <app-event-weather-table [properties]="getProperties()"></app-event-weather-table>
+  </div>
 
   <div class="d-flex flex-row">
     <div class="p-2">
@@ -73,7 +79,7 @@
 <div class="p-2">
   <h5>Event links:</h5>
 </div>
-<div *ngFor="let property of getProperties()">
+<div *ngFor="let property of getLinks()">
 
   <app-property-edit [property]="property"></app-property-edit>
 

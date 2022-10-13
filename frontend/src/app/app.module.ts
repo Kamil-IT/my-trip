@@ -30,6 +30,7 @@ import {AuthService} from "./core/service/AuthService";
 import {HeaderService} from "./core/service/HeaderService";
 import { ProfileOverviewComponent } from './user/component/profile/profile-overview/profile-overview.component';
 import {CurrentUserPrivilegesService} from "./core/service/CurrentUserPrivilegesService";
+import { EventWeatherTableComponent } from './trip/component/event/event-weather-table/event-weather-table.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {CurrentUserPrivilegesService} from "./core/service/CurrentUserPrivileges
     ParticipantComponent,
     UserDetailComponent,
     LoginComponent,
-    ProfileOverviewComponent
+    ProfileOverviewComponent,
+    EventWeatherTableComponent
   ],
   imports: [
     BrowserModule,

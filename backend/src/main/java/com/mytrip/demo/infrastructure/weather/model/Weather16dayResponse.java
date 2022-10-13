@@ -1,19 +1,20 @@
 package com.mytrip.demo.infrastructure.weather.model;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import java.util.ArrayList;
 
 @Builder
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Weather16dayResponse {
 
-    ArrayList<Weather16dayProperties> data;
-    String city_name;
-    Double lon;
-    String timezone;
-    Double lat;
-    String country_code;
-    String state_code;
+    private ArrayList<Weather16dayProperties> data;
+    private String city_name;
+    private Double lon;
+    private String timezone;
+    private Double lat;
+    private String country_code;
+    private String state_code;
 }

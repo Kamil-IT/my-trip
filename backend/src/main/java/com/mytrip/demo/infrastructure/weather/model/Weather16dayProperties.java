@@ -1,10 +1,14 @@
 package com.mytrip.demo.infrastructure.weather.model;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Builder
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Weather16dayProperties {
     Integer moonrise_ts;
     String wind_cdir;
@@ -39,7 +43,8 @@ public class Weather16dayProperties {
     Double low_temp;
     Double max_temp;
     Integer moonset_ts;
-    String datetime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate datetime;
     Double temp;
     Double min_temp;
     Integer clouds_mid;

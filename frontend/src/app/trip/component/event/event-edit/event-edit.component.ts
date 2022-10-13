@@ -35,12 +35,18 @@ export class EventEditComponent implements OnInit {
     return [''];
   }
 
-  getProperties(): Property[] | undefined {
+  getProperties(): Property[] {
     if (this.event?.properties) {
-      console.log(this.event?.properties)
-      return [...this.event?.properties];
+      console.log()
+      let sorted = this.event?.properties
+        .sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
+      return [...sorted];
     }
     return []
+  }
+
+  getLinks(): Property[] {
+    return this.getProperties().filter(property => !property.key.includes('weather'))
   }
 
 

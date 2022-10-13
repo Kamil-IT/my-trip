@@ -53,7 +53,7 @@ public class TripEventJpa {
     private Set<UserEventParticipantsJpa> participants = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private TripEventTypeName tripType;
-    @OneToMany(mappedBy = "tripEventJpa")
+    @OneToMany(mappedBy = "tripEventJpa", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<TripEventTypePropertiesJpa> properties = new HashSet<>();
 
@@ -64,6 +64,9 @@ public class TripEventJpa {
     }
 
     public void addProperty(String key, String value) {
+        if (properties == null) {
+            properties = new HashSet<>();
+        }
         TripEventTypePropertiesJpa property = TripEventTypePropertiesJpa.builder().propertyKey(key).propertyValue(value).tripEventJpa(this).build();
         properties.add(property);
     }

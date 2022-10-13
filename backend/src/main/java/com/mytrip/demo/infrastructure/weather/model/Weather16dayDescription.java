@@ -1,10 +1,11 @@
 package com.mytrip.demo.infrastructure.weather.model;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 @Builder
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Weather16dayDescription {
     String icon;
     Integer code;
