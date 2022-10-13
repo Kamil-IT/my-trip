@@ -6,10 +6,11 @@ import com.mytrip.demo.application.persistance.trip.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
 import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
-import com.mytrip.demo.application.persistance.user.UserJpa;
-import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.CreateEventDto;
 import com.mytrip.demo.application.port.in.trip.model.UpdateEventDto;
+import com.mytrip.demo.infrastructure.geocoding.GeocodingClient;
+import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardRequest;
+import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class EventService {
 
     private final TripEventRepository repository;
     private final TripRepository repositoryTrip;
+    private final GeocodingClient geocodingClient;
 
     private final UserService userService;
     private final TripService tripService;
@@ -34,14 +36,17 @@ public class EventService {
         UserEventParticipantsJpa user = userService.getEventParticipantById(userEmail);
         TripJpa trip = tripService.getById(event.getTripId());
 
+        String locationDescription = event.getLocationDescription();
+        GeocodingForwardResponse coordinates = geocodingClient.getCoordinates(GeocodingForwardRequest.builder().city(locationDescription).build());
+
         TripEventJpa eventCreated = TripEventJpa.builder()
                 .uuid(UUID.randomUUID())
                 .creator(userEmail)
                 .participants(new HashSet<>())
                 .title(event.getTitle())
-                .latitude(10d)
-                .longitude(10d)
-                .locationDescription(event.getLocationDescription())
+                .latitude(Double.valueOf(coordinates.getLon()))
+                .longitude(Double.valueOf(coordinates.getLat()))
+                .locationDescription(coordinates.getDisplay_name())
                 .startDate(event.getFrom())
                 .endDate(event.getTo())
                 .tripType(event.getType())
@@ -51,7 +56,6 @@ public class EventService {
         eventCreated.getTrip().addEvent(eventCreated);
         eventCreated.addParticipants(user);
         eventCreated.setProperties(new HashSet<>());
-//        trip.addEvent(eventCreated);
         repository.save(eventCreated);
         return eventCreated;
     }

@@ -17,7 +17,7 @@ public interface UserMapper {
 
     List<User> toDomain(Collection<UserJpa> user);
 
-    default Collection<? extends GrantedAuthority> toDomain(String authority) {
+    default Collection<User.Authority> toDomain(String authority) {
         return List.of(User.Authority.builder().authority(authority).build());
     }
 }

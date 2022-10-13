@@ -1,26 +1,30 @@
 package com.mytrip.demo.infrastructure.geocoding.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class GeocodingForwardResponse {
 
-    Double importance;
-    String licence;
+    private Double importance;
+    private String licence;
     @JsonProperty("class")
-    String myclass;
-    GeocodingForwardAddress address;
-    Long osm_id;
-    String display_name;
-    String osm_type;
-    String lon;
-    Integer place_id;
-    ArrayList<String> boundingbox;
-    String lat;
-    String type;
+    private String myclass;
+    private Long osm_id;
+    private String display_name;
+    private String osm_type;
+    private String lon;
+    private Integer place_id;
+    private List<String> boundingbox;
+    private String lat;
+    private String type;
 }
