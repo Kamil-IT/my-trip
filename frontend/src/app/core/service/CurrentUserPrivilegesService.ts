@@ -23,7 +23,7 @@ export class CurrentUserPrivilegesService {
 
   refreshUser(): void {
     this.userService.getCurrentUser().subscribe((res) => {
-      let authorityReal = res.authorities.find((obj) => true)?.authority;
+      let authorityReal = res.authorities.find(() => true)?.authority;
       this.authority = authorityReal === undefined ? 'ADMIN' : authorityReal;
     });
   }

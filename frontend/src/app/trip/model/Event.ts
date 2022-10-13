@@ -1,14 +1,3 @@
-import {KeyValue} from "@angular/common";
-
-export interface LocationDescription {
-  locationDescription: string;
-}
-
-export interface Property {
-  key: string;
-  value: string;
-}
-
 export interface Event {
   creatorEmail: string;
   uuid: string;
@@ -19,6 +8,15 @@ export interface Event {
   title: string;
   properties: Property[];
   participants: string[];
+}
+
+export interface LocationDescription {
+  locationDescription: string;
+}
+
+export interface Property {
+  key: string;
+  value: string;
 }
 
 export interface CreateEvent {
