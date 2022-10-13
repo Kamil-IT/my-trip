@@ -2,14 +2,16 @@ package com.mytrip.demo.application.port.out;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.user.*;
-import com.mytrip.demo.application.port.in.user.model.UserDto;
+import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
+import com.mytrip.demo.application.persistance.user.model.UserJpa;
+import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
+import com.mytrip.demo.application.port.in.user.model.CreateUser;
 import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,7 +21,7 @@ import java.util.*;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserEventParticipantRepository userEventParticipantRepository;
     private final UserTripParticipantRepository usertripParticipantRepository;
 
@@ -39,7 +41,7 @@ public class UserService implements UserDetailsService {
         return usertripParticipantRepository.findByEmail(email).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public UserJpa createUser(UserDto user) {
+    public UserJpa createUser(CreateUser user) {
         String email = user.getEmail();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         String grantedAuthority = user.getAuthority();

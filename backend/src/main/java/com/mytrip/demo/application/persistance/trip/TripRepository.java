@@ -1,5 +1,6 @@
 package com.mytrip.demo.application.persistance.trip;
 
+import com.mytrip.demo.application.persistance.trip.model.TripJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,5 @@ import java.util.UUID;
 public interface TripRepository extends JpaRepository<TripJpa, Long> {
 
     Optional<TripJpa> findByUuid(UUID uuid);
-
     void deleteByUuid(UUID uuid);
 }

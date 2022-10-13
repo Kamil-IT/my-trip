@@ -1,5 +1,6 @@
 package com.mytrip.demo.infrastructure.geocoding;
 
+import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardRequest;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardResponse;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingReverseResponse;
@@ -21,22 +22,26 @@ public class GeocodingClient {
 
     public static final String URL = "https://forward-reverse-geocoding.p.rapidapi.com/v1/forward";
 
-    public GeocodingReverseResponse getLocation(double latitude, double longitude) {
-        return GeocodingReverseResponse.builder().build();
+    public GeocodingForwardResponse getCoordinates(GeocodingForwardRequest geocodingForwardRequest) {
+        HttpHeaders headers = getHttpHeaders();
+
+        String url = URL + "?city=" + geocodingForwardRequest.getCity();
+
+        ResponseEntity<List<GeocodingForwardResponse>> response = restTemplate.exchange(url,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                new ParameterizedTypeReference<>() {
+                });
+
+        return Objects.requireNonNull(response.getBody()).stream().findAny()
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public GeocodingForwardResponse getCoordinates(GeocodingForwardRequest geocodingForwardRequest) {
+    private static HttpHeaders getHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-RapidAPI-Key", "0d9a37f80fmsh1c307ea0fa859cep11e3e3jsn3a99d087cd8a");
         headers.add("X-RapidAPI-Host", "forward-reverse-geocoding.p.rapidapi.com");
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-
-        String url = URL + "?city=" + geocodingForwardRequest.getCity();
-
-        ResponseEntity<List<GeocodingForwardResponse>> response =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<>() {});
-
-        return Objects.requireNonNull(response.getBody()).stream().findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Not found city"));
+        return headers;
     }
 }

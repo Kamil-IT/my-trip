@@ -1,6 +1,6 @@
 package com.mytrip.demo.domain;
 
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
+import com.mytrip.demo.application.persistance.trip.model.event.type.TripEventTypeName;
 import lombok.Builder;
 import lombok.Value;
 
@@ -23,7 +23,6 @@ public class Event {
     @Value
     @Builder
     public static class LocationDetails {
-
         Double latitude;
         Double longitude;
         String locationDescription;

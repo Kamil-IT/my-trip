@@ -1,11 +1,10 @@
 package com.mytrip.demo.application.port.in.trip.mapper;
 
-import com.mytrip.demo.application.persistance.trip.TripJpa;
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import com.mytrip.demo.application.persistance.trip.event.properties.TripEventTypePropertiesJpa;
-import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
-import com.mytrip.demo.application.persistance.user.UserJpa;
-import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
+import com.mytrip.demo.application.persistance.trip.model.TripJpa;
+import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
+import com.mytrip.demo.application.persistance.trip.model.event.properties.TripEventTypePropertiesJpa;
+import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
+import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
 import com.mytrip.demo.domain.Event;
 import com.mytrip.demo.domain.Trip;
 import org.mapstruct.Mapper;
@@ -13,7 +12,6 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 

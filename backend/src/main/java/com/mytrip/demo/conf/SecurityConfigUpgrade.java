@@ -37,34 +37,13 @@ public class SecurityConfigUpgrade {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
-//                .httpBasic();
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/v1/user")
                 .permitAll()
-//                .anyRequest()
-//                .authenticated()
                 .and()
                 .csrf()
                 .disable()
                 .httpBasic();
-
-
-//                .antMatcher("v1/trip/**")
-//                .httpBasic();
-//                .authorizeRequests()
-//                .antMatchers("/admin/**")
-//                .hasAnyRole("ADMIN")
-//                .antMatchers("/user/**")
-//                .hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/login/**")
-//                .anonymous()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }

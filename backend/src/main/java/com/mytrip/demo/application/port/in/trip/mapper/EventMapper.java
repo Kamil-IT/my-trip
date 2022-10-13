@@ -1,9 +1,8 @@
 package com.mytrip.demo.application.port.in.trip.mapper;
 
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import com.mytrip.demo.application.persistance.trip.event.properties.TripEventTypePropertiesJpa;
+import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
+import com.mytrip.demo.application.persistance.trip.model.event.properties.TripEventTypePropertiesJpa;
 import com.mytrip.demo.domain.Event;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.Collection;

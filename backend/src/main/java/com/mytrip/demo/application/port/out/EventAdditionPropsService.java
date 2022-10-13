@@ -1,8 +1,7 @@
 package com.mytrip.demo.application.port.out;
 
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import com.mytrip.demo.application.persistance.trip.event.properties.TripEventTypePropertiesJpa;
-import com.mytrip.demo.application.persistance.trip.event.type.TripEventTypeName;
+import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
+import com.mytrip.demo.application.persistance.trip.model.event.type.TripEventTypeName;
 import com.mytrip.demo.infrastructure.weather.WeatherClient;
 import com.mytrip.demo.infrastructure.weather.model.Weather16dayResponse;
 import lombok.RequiredArgsConstructor;

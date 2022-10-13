@@ -1,12 +1,12 @@
 package com.mytrip.demo.application.port.out;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
-import com.mytrip.demo.application.persistance.trip.TripJpa;
+import com.mytrip.demo.application.persistance.trip.model.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
-import com.mytrip.demo.application.persistance.user.UserJpa;
-import com.mytrip.demo.application.persistance.user.UserTripParticipantsJpa;
-import com.mytrip.demo.application.port.in.trip.model.CreateTripDto;
-import com.mytrip.demo.application.port.in.trip.model.UpdateTripDto;
+import com.mytrip.demo.application.persistance.user.model.UserJpa;
+import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
+import com.mytrip.demo.application.port.in.trip.model.create.CreateTripDto;
+import com.mytrip.demo.application.port.in.trip.model.update.UpdateTripDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class TripService {
     private final TripRepository repository;
-
     private final UserService userService;
 
     public List<TripJpa> getAll(String email){

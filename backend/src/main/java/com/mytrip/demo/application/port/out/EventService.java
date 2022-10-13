@@ -2,12 +2,12 @@ package com.mytrip.demo.application.port.out;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.trip.TripEventRepository;
-import com.mytrip.demo.application.persistance.trip.TripJpa;
+import com.mytrip.demo.application.persistance.trip.model.TripJpa;
 import com.mytrip.demo.application.persistance.trip.TripRepository;
-import com.mytrip.demo.application.persistance.trip.event.TripEventJpa;
-import com.mytrip.demo.application.persistance.user.UserEventParticipantsJpa;
-import com.mytrip.demo.application.port.in.trip.model.CreateEventDto;
-import com.mytrip.demo.application.port.in.trip.model.UpdateEventDto;
+import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
+import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
+import com.mytrip.demo.application.port.in.trip.model.create.CreateEventDto;
+import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
 import com.mytrip.demo.infrastructure.geocoding.GeocodingClient;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardRequest;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardResponse;
