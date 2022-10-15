@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Event, Property} from "../../../model/Event";
 import {EventService} from "../../../services/EventService";
 import {KeyValue} from "@angular/common";
+import {AccommodationDetails} from "../../../model/Hotel";
 
 @Component({
   selector: 'app-event-edit',
@@ -37,7 +38,6 @@ export class EventEditComponent implements OnInit {
 
   getProperties(): Property[] {
     if (this.event?.properties) {
-      console.log()
       let sorted = this.event?.properties
         .sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
       return [...sorted];
@@ -47,6 +47,25 @@ export class EventEditComponent implements OnInit {
 
   getLinks(): Property[] {
     return this.getProperties().filter(property => !property.key.includes('weather'))
+  }
+
+  getWeatherProps(): Property[] {
+    return this.getProperties().filter(property => property.key.includes('weather'))
+  }
+
+  getAccommodationDetails(): AccommodationDetails | undefined {
+    let properties = this.getLinks();
+    console.log(this.getProperties())
+    if (properties.length > 1) {
+      return {
+        address: properties.filter(property => property.key.includes('hotelAddress'))[0].value,
+        eventUuid: "",
+        hotelName: properties.filter(property => property.key.includes('hotelName'))[0].value,
+        hotelRating: properties.filter(property => property.key.includes('hotelRating'))[0].value,
+        photoUrl: properties.filter(property => property.key.includes('hotelPhotoUrl'))[0].value
+      }
+    }
+    return undefined;
   }
 
 
@@ -72,5 +91,9 @@ export class EventEditComponent implements OnInit {
       from: this.event?.from ? this.event?.from : "",
       to: this.event?.to ? this.event?.to : ""
     }
+  }
+
+  getEventId(): string {
+    return this.event?.uuid ? this.event.uuid : '';
   }
 }

@@ -74,6 +74,7 @@ public class EventService {
     public void addProperty(String key, String value, UUID eventUuid) {
         TripEventJpa event = findByUuid(eventUuid);
         event.addProperty(key, value);
+        repository.save(event);
     }
 
     public void addAccommodation(AddAccommodationDto property) {

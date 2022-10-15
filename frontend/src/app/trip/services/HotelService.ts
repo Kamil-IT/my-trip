@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {CreateEvent} from "../model/Event";
 import {ParticipantManagment} from "./ParticipantManagment";
 import {HeaderService} from "../../core/service/HeaderService";
-import {AddAccommodationDto, Hotel, HotelsResponse} from "../model/Hotel";
+import {AccommodationDetails, Hotel, HotelsResponse} from "../model/Hotel";
 
 @Injectable()
 export class HotelService {
@@ -28,7 +28,7 @@ export class HotelService {
       {headers: this.headerService.getHeaders()});
   }
 
-  addHotelToEvent(body: AddAccommodationDto): Observable<void> {
+  addHotelToEvent(body: AccommodationDetails): Observable<void> {
     // Custom response for error
     return this.http.post<void>(this.BASE_URL + '/trip/event/accommodation/property',
       body, {headers: this.headerService.getHeaders()});

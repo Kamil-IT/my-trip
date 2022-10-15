@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Hotel} from "../../../../model/Hotel";
+import {HotelService} from "../../../../services/HotelService";
+import {TripService} from "../../../../services/TripService";
 
 @Component({
   selector: 'app-event-accommodation-card',
@@ -7,6 +9,8 @@ import {Hotel} from "../../../../model/Hotel";
   styleUrls: ['./event-accommodation-card.component.scss']
 })
 export class EventAccommodationCardComponent implements OnInit {
+  @Input()
+  eventId: string = ''
   @Input()
   hotel: Hotel = {
     address: {
@@ -23,10 +27,20 @@ export class EventAccommodationCardComponent implements OnInit {
     starRating: ""
   };
 
-  constructor() {
+  constructor(private readonly hotelService: HotelService,
+              private readonly tripService: TripService) {
   }
 
   ngOnInit(): void {
   }
 
+  saveHotel() {
+    this.hotelService.addHotelToEvent({
+      address: this.hotel.address.locality + ', ' + this.hotel.address.streetAddress,
+      eventUuid: this.eventId,
+      hotelName: this.hotel.name,
+      hotelRating: this.hotel.starRating,
+      photoUrl: this.hotel.optimizedThumbUrls.srpDesktop
+    }).subscribe(() => this.tripService.populateNewTrips())
+  }
 }

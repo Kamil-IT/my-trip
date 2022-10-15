@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LocationDescription} from "../../../../model/Event";
 import {Observable} from "rxjs";
-import {Hotel, HotelsResponse} from "../../../../model/Hotel";
+import {AccommodationDetails, Hotel, HotelsResponse} from "../../../../model/Hotel";
 import {HotelService} from "../../../../services/HotelService";
 
 @Component({
@@ -13,16 +13,35 @@ export class EventAccommodationOverviewComponent implements OnInit {
   @Input()
   location: LocationDescription = {latitude: "", longitude: "", locationDescription: ""};
   @Input()
+  eventUuid: string = "";
+  @Input()
   date: { from: string, to: string } = {from: "", to: ""};
+  @Input()
+  accommodationDetails: AccommodationDetails | undefined;
   hotels: Observable<HotelsResponse> | undefined;
+
   constructor(private readonly hotelService: HotelService) {
   }
 
   ngOnInit(): void {
-    console.log(this.location)
-    console.log(this.date)
-    this.hotels = this.hotelService.findHotels(this.location.latitude, this.location.longitude, this.date.from, this.date.to)
-    this.hotels.subscribe(res => console.log(res))
+    if (!this.accommodationDetails) {
+      this.hotels = this.hotelService.findHotels(this.location.latitude, this.location.longitude, this.date.from, this.date.to)
+    }
   }
 
+  getHotel(): Hotel {
+    return {
+      address: {
+        streetAddress: this.accommodationDetails?.address ? this.accommodationDetails?.address.split(', ')[0] : '',
+        locality: this.accommodationDetails?.address ? this.accommodationDetails?.address.split(', ')[1] : ''
+      },
+      coordinate: {lat: -1, lon: -1},
+      id: -1,
+      name: this.accommodationDetails?.hotelName ? this.accommodationDetails?.hotelName : "",
+      optimizedThumbUrls: {
+        srpDesktop: this.accommodationDetails?.photoUrl ? this.accommodationDetails?.photoUrl : ""
+      },
+      starRating: this.accommodationDetails?.hotelRating ? this.accommodationDetails?.hotelRating : ""
+    };
+  }
 }

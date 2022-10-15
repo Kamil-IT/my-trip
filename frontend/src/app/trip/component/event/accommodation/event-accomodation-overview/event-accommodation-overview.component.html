@@ -1,5 +1,9 @@
 <div *ngIf="(hotels | async) as hotelRes">
   <div *ngFor="let hotel of hotelRes.searchResults.results">
-    <app-event-accommodation-card [hotel]="hotel"></app-event-accommodation-card>
+    <app-event-accommodation-card [hotel]="hotel" [eventId]="eventUuid"></app-event-accommodation-card>
   </div>
+</div>
+
+<div *ngIf="accommodationDetails">
+  <app-event-accommodation-card [hotel]="getHotel()"></app-event-accommodation-card>
 </div>

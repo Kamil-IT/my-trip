@@ -32,7 +32,7 @@ export interface HotelsResponse {
 }
 
 
-export interface AddAccommodationDto {
+export interface AccommodationDetails {
   photoUrl: string;
   hotelName: string;
   hotelRating: string;
