@@ -50,6 +50,11 @@
     <input type="text" id="locationDescription" name="locationDescription" class="form-control"
            value="{{event?.location?.locationDescription}}" [(ngModel)]="locationDescription">
   </div>
+
+  <div *ngIf="event?.eventType === 'Accommodation'">
+    <app-event-accommodation-overview [location]="getLocation()" [date]="getDates()"></app-event-accommodation-overview>
+  </div>
+
   <div class="p-2">
     <label>Weather:</label>
   </div>

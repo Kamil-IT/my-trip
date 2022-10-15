@@ -7,8 +7,10 @@ import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJ
 import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
 import com.mytrip.demo.domain.Event;
 import com.mytrip.demo.domain.Trip;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 import java.util.Map;
@@ -47,9 +49,13 @@ public interface TripMapper {
     @Mapping(target = "to", source = "endDate")
     @Mapping(target = "creatorEmail", source = "creator")
     @Mapping(target = "eventType", source = "tripType")
-    @Mapping(target = "location", source = "locationDescription")
+    @Mapping(target = "location", source = "locationDescription", qualifiedByName = "locDet")
     @Mapping(target = "properties", source = "properties")
-    Event toDomain(TripEventJpa event);
+    Event toDomain(TripEventJpa event, @Context TripEventJpa eventJpa);
+
+    default Event toDomain(TripEventJpa event) {
+        return toDomain(event, event);
+    };
 
     default Set<Event.Property> toDomain(Set<TripEventTypePropertiesJpa> properties) {
         return properties.stream()
@@ -60,8 +66,10 @@ public interface TripMapper {
                 .collect(Collectors.toSet());
     }
 
-    default Event.LocationDetails toDomain(String locationDescription) {
-        return Event.LocationDetails.builder().locationDescription(locationDescription).build();
+    @Named("locDet")
+    default Event.LocationDetails toDomainV2(String locationDescription, @Context TripEventJpa eventJpa) {
+        return Event.LocationDetails.builder().locationDescription(locationDescription)
+                .latitude(eventJpa.getLatitude()).longitude(eventJpa.getLongitude()).build();
     }
 
     default Event.Property toDomain(TripEventTypePropertiesJpa propertiesJpa) {

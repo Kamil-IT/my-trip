@@ -31,6 +31,9 @@ import {HeaderService} from "./core/service/HeaderService";
 import { ProfileOverviewComponent } from './user/component/profile/profile-overview/profile-overview.component';
 import {CurrentUserPrivilegesService} from "./core/service/CurrentUserPrivilegesService";
 import { EventWeatherTableComponent } from './trip/component/event/event-weather-table/event-weather-table.component';
+import { EventAccommodationCardComponent } from './trip/component/event/accommodation/event-accomodation-card/event-accommodation-card.component';
+import { EventAccommodationOverviewComponent } from './trip/component/event/accommodation/event-accomodation-overview/event-accommodation-overview.component';
+import {HotelService} from "./trip/services/HotelService";
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { EventWeatherTableComponent } from './trip/component/event/event-weather
     UserDetailComponent,
     LoginComponent,
     ProfileOverviewComponent,
-    EventWeatherTableComponent
+    EventWeatherTableComponent,
+    EventAccommodationCardComponent,
+    EventAccommodationOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,7 @@ import { EventWeatherTableComponent } from './trip/component/event/event-weather
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [AuthService, HeaderService, TripService, EventService, UserService, HttpClient, CurrentUserPrivilegesService],
+  providers: [AuthService, HeaderService, TripService, EventService, UserService, HotelService, HttpClient, CurrentUserPrivilegesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

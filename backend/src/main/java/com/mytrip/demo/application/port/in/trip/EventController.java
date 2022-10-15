@@ -3,6 +3,7 @@ package com.mytrip.demo.application.port.in.trip;
 import com.mytrip.demo.application.port.in.trip.mapper.TripMapper;
 import com.mytrip.demo.application.port.in.trip.model.create.CreateEventDto;
 import com.mytrip.demo.application.port.in.trip.model.delete.RemoveParticipantDto;
+import com.mytrip.demo.application.port.in.trip.model.update.AddAccommodationDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddEventPropertyDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddParticipantDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
@@ -66,6 +67,13 @@ public class EventController {
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addEventProperty(@RequestBody @Valid AddEventPropertyDto property) {
         eventService.addProperty(property.getPropertyKey(), property.getPropertyValue(), property.getEventUuid());
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/trip/event/accommodation/property")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public ResponseEntity<Void> addAccommodationProperties(@RequestBody @Valid AddAccommodationDto property) {
+        eventService.addAccommodation(property);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

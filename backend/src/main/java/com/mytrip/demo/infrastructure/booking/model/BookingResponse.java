@@ -15,5 +15,5 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookingResponse {
 
-    private List<SearchHotelsResults> searchResults;
+    private SearchHotelsResults searchResults;
 }

@@ -7,6 +7,7 @@ import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
 import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.create.CreateEventDto;
+import com.mytrip.demo.application.port.in.trip.model.update.AddAccommodationDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
 import com.mytrip.demo.infrastructure.geocoding.GeocodingClient;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardRequest;
@@ -73,6 +74,13 @@ public class EventService {
     public void addProperty(String key, String value, UUID eventUuid) {
         TripEventJpa event = findByUuid(eventUuid);
         event.addProperty(key, value);
+    }
+
+    public void addAccommodation(AddAccommodationDto property) {
+        addProperty("hotelPhotoUrl", property.getPhotoUrl(), property.getEventUuid());
+        addProperty("hotelRating", property.getHotelRating(), property.getEventUuid());
+        addProperty("hotelName", property.getHotelName(), property.getEventUuid());
+        addProperty("hotelAddress", property.getAddress(), property.getEventUuid());
     }
 
     private TripEventJpa findByUuid(UUID eventUuid) {

@@ -12,6 +12,8 @@ export interface Event {
 
 export interface LocationDescription {
   locationDescription: string;
+  latitude: string;
+  longitude: string;
 }
 
 export interface Property {

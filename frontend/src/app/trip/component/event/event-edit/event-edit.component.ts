@@ -62,4 +62,15 @@ export class EventEditComponent implements OnInit {
       locationDescription: this.locationDescription
     });
   }
+
+  getLocation() {
+    return this.event ? this.event.location : {latitude: "", longitude: "", locationDescription: ""}
+  }
+
+  getDates() {
+    return {
+      from: this.event?.from ? this.event?.from : "",
+      to: this.event?.to ? this.event?.to : ""
+    }
+  }
 }

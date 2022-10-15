@@ -1,5 +1,7 @@
 package com.mytrip.demo.infrastructure.booking;
 
+import com.mytrip.demo.application.exception.ResourceNotFoundException;
+import com.mytrip.demo.application.port.in.booking.model.FindHotel;
 import com.mytrip.demo.infrastructure.booking.model.BookingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -8,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +36,10 @@ public class BookingClient {
             .encode()
             .toUriString();
 
-    public BookingResponse findHotels(double latitude, double longitude, int adultsNumber, LocalDate from, LocalDate to) {
+    public BookingResponse findHotels(FindHotel findHotel) {
         HttpHeaders headers = getHttpHeaders();
-        Map<String, String> urlParams = getUrlParams(latitude, longitude, adultsNumber, from, to);
+        Map<String, String> urlParams = getUrlParams(findHotel.getLatitude(), findHotel.getLongitude(),
+                findHotel.getAdultsNumber(), findHotel.getFrom(), findHotel.getTo());
 
         ResponseEntity<BookingResponse> response = restTemplate.exchange(URL_TEMPLATE,
                 HttpMethod.GET,
