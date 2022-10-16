@@ -16,13 +16,31 @@ public class InitTestData {
     private final TripService tripService;
 
     @PostConstruct
-    void initData(){
-        CreateUserDto user1 = CreateUserDto.builder()
+    void initData() {
+        CreateUserDto userAdmin1 = CreateUserDto.builder()
                 .email("email@gamil.com")
                 .authority("ADMIN")
                 .password("pass")
                 .build();
+        CreateUserDto userAdmin2 = CreateUserDto.builder()
+                .email("jan.kowalski@gamil.com")
+                .authority("ADMIN")
+                .password("pass")
+                .build();
+        CreateUserDto userAdmin3 = CreateUserDto.builder()
+                .email("julia.dodge@gamil.com")
+                .authority("ADMIN")
+                .password("pass")
+                .build();
+        CreateUserDto userAdmin4 = CreateUserDto.builder()
+                .email("julia.kamczarek@gamil.com")
+                .authority("ADMIN")
+                .password("pass")
+                .build();
 
-        userService.create(user1);
+        userService.create(userAdmin1);
+        userService.create(userAdmin2);
+        userService.create(userAdmin3);
+        userService.create(userAdmin4);
     }
 }
