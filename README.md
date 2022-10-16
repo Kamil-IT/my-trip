@@ -2,7 +2,7 @@
 
 # Pre requirements to run:
 
-## Apps neede to be installed
+## Apps needed to be installed
 
 - Java 15
 - Maven 1.8.1
