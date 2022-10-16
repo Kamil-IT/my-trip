@@ -1,4 +1,4 @@
-package com.mytrip.demo.conf;
+package com.mytrip.demo.application.conf;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

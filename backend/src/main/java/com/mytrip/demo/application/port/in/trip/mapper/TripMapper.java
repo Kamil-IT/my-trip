@@ -12,6 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,7 +59,7 @@ public interface TripMapper {
     };
 
     default Set<Event.Property> toDomain(Set<TripEventTypePropertiesJpa> properties) {
-        return properties.stream()
+        return properties == null ? new HashSet<>() : properties.stream()
                 .map(property -> Event.Property.builder()
                         .key(property.getPropertyKey())
                         .value(property.getPropertyValue())
