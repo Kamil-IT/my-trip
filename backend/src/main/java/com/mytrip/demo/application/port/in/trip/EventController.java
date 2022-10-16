@@ -7,9 +7,11 @@ import com.mytrip.demo.application.port.in.trip.model.update.AddAccommodationDto
 import com.mytrip.demo.application.port.in.trip.model.update.AddEventPropertyDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddParticipantDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
-import com.mytrip.demo.application.port.out.EventService;
+import com.mytrip.demo.application.port.out.ParticitableService;
+import com.mytrip.demo.application.port.out.impl.EventService;
 import com.mytrip.demo.domain.Event;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,12 +29,15 @@ import java.util.UUID;
 public class EventController {
     private final TripMapper tripMapper;
     private final EventService eventService;
+    @Qualifier("eventServiceImpl")
+    private final ParticitableService particitableService;
 
     @PostMapping("/trip/event")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public Event addEvent(@RequestBody @Valid CreateEventDto event, Authentication authentication) {
         String email = authentication.getName();
-        return tripMapper.toDomain(eventService.create(event, email));
+        event.setCreator(event.getCreator() == null ? email : event.getCreator());
+        return tripMapper.toDomain(eventService.create(event));
     }
 
     @DeleteMapping("/trip/event/{id}")
@@ -52,14 +57,14 @@ public class EventController {
     @PostMapping("/trip/event/participant")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addEventParticipant(@RequestBody @Valid AddParticipantDto participant) {
-        eventService.addParticipants(participant.getUuid(), participant.getEmail());
+        particitableService.addParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/trip/event/participant")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> removeEventParticipant(@RequestBody @Valid RemoveParticipantDto participant) {
-        eventService.deleteParticipant(participant.getUuid(), participant.getEmail());
+        particitableService.removeParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -80,6 +85,6 @@ public class EventController {
     @GetMapping("/trip/event")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public Event getEvent(@PathParam("id") UUID id) {
-        return tripMapper.toDomain(eventService.getEventById(id));
+        return tripMapper.toDomain(eventService.get(id));
     }
 }

@@ -1,14 +1,15 @@
-package com.mytrip.demo.application.port.out;
+package com.mytrip.demo.application.port.out.impl;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
 import com.mytrip.demo.application.persistance.trip.TripEventRepository;
 import com.mytrip.demo.application.persistance.trip.model.TripJpa;
-import com.mytrip.demo.application.persistance.trip.TripRepository;
 import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
 import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
 import com.mytrip.demo.application.port.in.trip.model.create.CreateEventDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddAccommodationDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
+import com.mytrip.demo.application.port.out.ParticitableService;
+import com.mytrip.demo.application.port.out.UserService;
 import com.mytrip.demo.infrastructure.geocoding.GeocodingClient;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardRequest;
 import com.mytrip.demo.infrastructure.geocoding.model.GeocodingForwardResponse;
@@ -20,30 +21,31 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class EventService {
+public class EventServiceImpl implements ParticitableService, EventService {
 
     private final TripEventRepository repository;
-    private final TripRepository repositoryTrip;
     private final GeocodingClient geocodingClient;
     private final EventAdditionPropsService eventAdditionPropsService;
-
     private final UserService userService;
-    private final TripService tripService;
+    private final TripServiceImpl tripServiceImpl;
 
-    public TripEventJpa getEventById(UUID uuid) {
+    @Override
+    public TripEventJpa get(UUID uuid) {
         return findByUuid(uuid);
     }
 
-    public TripEventJpa create(CreateEventDto event, String userEmail) {
-        UserEventParticipantsJpa user = userService.getEventParticipantById(userEmail);
-        TripJpa trip = tripService.getById(event.getTripId());
+    @Override
+    public TripEventJpa create(CreateEventDto event) {
+        String email = event.getCreator();
+        UserEventParticipantsJpa user = userService.getEventParticipantById(email);
+        TripJpa trip = tripServiceImpl.get(event.getTripId());
 
         String locationDescription = event.getLocationDescription();
         GeocodingForwardResponse coordinates = geocodingClient.getCoordinates(GeocodingForwardRequest.builder().city(locationDescription).build());
 
         TripEventJpa eventCreated = TripEventJpa.builder()
                 .uuid(UUID.randomUUID())
-                .creator(userEmail)
+                .creator(email)
                 .participants(new HashSet<>())
                 .title(event.getTitle())
                 .latitude(Double.valueOf(coordinates.getLon()))
@@ -63,7 +65,8 @@ public class EventService {
         return eventCreated;
     }
 
-    public void addParticipants(UUID eventUuid, String email) {
+    @Override
+    public void addParticipant(UUID eventUuid, String email) {
         TripEventJpa event = findByUuid(eventUuid);
         UserEventParticipantsJpa user = userService.getEventParticipantById(email);
 
@@ -71,12 +74,14 @@ public class EventService {
         repository.save(event);
     }
 
+    @Override
     public void addProperty(String key, String value, UUID eventUuid) {
         TripEventJpa event = findByUuid(eventUuid);
         event.addProperty(key, value);
         repository.save(event);
     }
 
+    @Override
     public void addAccommodation(AddAccommodationDto property) {
         addProperty("hotelPhotoUrl", property.getPhotoUrl(), property.getEventUuid());
         addProperty("hotelRating", property.getHotelRating(), property.getEventUuid());
@@ -89,7 +94,8 @@ public class EventService {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public void deleteParticipant(UUID eventUuid, String email) {
+    @Override
+    public void removeParticipant(UUID eventUuid, String email) {
         TripEventJpa event = findByUuid(eventUuid);
         UserEventParticipantsJpa user = userService.getEventParticipantById(email);
 
@@ -97,11 +103,13 @@ public class EventService {
         repository.save(event);
     }
 
+    @Override
     @Transactional
     public void delete(UUID id) {
         repository.deleteByUuid(id);
     }
 
+    @Override
     public void update(UUID id, UpdateEventDto updateEventDto) {
         TripEventJpa event = findByUuid(id);
         event.setStartDate(updateEventDto.getFrom());

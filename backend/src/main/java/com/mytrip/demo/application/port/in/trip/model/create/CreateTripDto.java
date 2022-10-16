@@ -21,6 +21,7 @@ public class CreateTripDto {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate to;
+    String creator;
 
 //  trip  Events can be add here -> thig abut it
 }

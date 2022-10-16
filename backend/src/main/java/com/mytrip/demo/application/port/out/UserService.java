@@ -6,6 +6,7 @@ import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJ
 import com.mytrip.demo.application.persistance.user.model.UserJpa;
 import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
 import com.mytrip.demo.application.port.in.user.model.CreateUser;
+import com.mytrip.demo.application.port.in.user.model.UpdateUserDto;
 import com.mytrip.demo.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public UserJpa getById(String email) {
+    public UserJpa get(String email) {
         return userRepository.findByEmail(email).orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -41,7 +42,7 @@ public class UserService implements UserDetailsService {
         return usertripParticipantRepository.findByEmail(email).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public UserJpa createUser(CreateUser user) {
+    public UserJpa create(CreateUser user) {
         String email = user.getEmail();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         String grantedAuthority = user.getAuthority();
@@ -69,5 +70,12 @@ public class UserService implements UserDetailsService {
                 .accountNonExpired(true)
                 .enabled(true)
                 .build();
+    }
+
+    public void update(String email, UpdateUserDto user) {
+        UserJpa userJpa = get(email);
+        userJpa.setPassword(user.getPassword() != null ? user.getPassword() : userJpa.getPassword());
+        userJpa.setAuthority(user.getAuthority() != null ? user.getAuthority() : userJpa.getAuthority());
+        userRepository.save(userJpa);
     }
 }

@@ -7,9 +7,11 @@ import com.mytrip.demo.application.port.in.trip.model.delete.RemoveTripParticipa
 import com.mytrip.demo.application.port.in.trip.model.get.GetTripsDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddParticipantDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateTripDto;
+import com.mytrip.demo.application.port.out.ParticitableService;
 import com.mytrip.demo.application.port.out.TripService;
 import com.mytrip.demo.domain.Trip;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,13 +28,16 @@ import java.util.UUID;
 @RequestMapping("/v1")
 public class TripController {
 
-    private final TripService tripService;
     private final TripMapper tripMapper;
+    @Qualifier("tripServiceImpl")
+    private final ParticitableService particitableService;
+    @Qualifier("tripServiceImpl")
+    private final TripService tripService;
 
     @GetMapping("/trip/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public Trip getTrip(@PathVariable("id") UUID id) {
-        return tripMapper.toDomain(tripService.getById(id));
+        return tripMapper.toDomain(tripService.get(id));
     }
 
     @GetMapping("/trip")
@@ -47,13 +52,15 @@ public class TripController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Trip addTrip(@RequestBody @Valid CreateTripDto trip, Authentication authentication) {
         String email = authentication.getName();
-        return tripMapper.toDomain(tripService.create(trip, email));
+        trip.setCreator(trip.getCreator() == null ? email : trip.getCreator());
+        return tripMapper.toDomain(tripService.create(trip));
     }
 
     @PutMapping("/trip")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public Trip updateTrip(@RequestBody @Valid UpdateTripDto trip) {
-        return tripMapper.toDomain(tripService.update(trip));
+    public ResponseEntity<Void> updateTrip(@RequestBody @Valid UpdateTripDto trip) {
+        tripService.update(trip.getUuid(), trip);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/trip/{id}")
@@ -66,14 +73,14 @@ public class TripController {
     @PostMapping("/trip/participant")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> addTripParticipant(@RequestBody @Valid AddParticipantDto participant) {
-        tripService.addParticipants(participant.getUuid(), participant.getEmail());
+        particitableService.addParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/trip/participant")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Void> removeTripParticipant(@RequestBody @Valid RemoveTripParticipantDto participant) {
-        tripService.deleteParticipant(participant.getUuid(), participant.getEmail());
+        particitableService.removeParticipant(participant.getUuid(), participant.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

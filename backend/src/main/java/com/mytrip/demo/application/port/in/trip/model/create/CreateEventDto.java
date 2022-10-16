@@ -30,5 +30,7 @@ public class CreateEventDto {
     @NotNull
     UUID tripId;
 
+    String creator;
+
     List<Map<String, String>> properties;
 }
