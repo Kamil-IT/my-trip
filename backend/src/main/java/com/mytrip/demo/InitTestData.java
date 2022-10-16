@@ -1,8 +1,8 @@
 package com.mytrip.demo;
 
-import com.mytrip.demo.application.port.in.user.model.CreateUser;
+import com.mytrip.demo.application.port.in.user.model.CreateUserDto;
+import com.mytrip.demo.application.port.out.TripService;
 import com.mytrip.demo.application.port.out.UserService;
-import com.mytrip.demo.application.port.out.impl.TripServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +13,11 @@ import javax.annotation.PostConstruct;
 public class InitTestData {
 
     private final UserService userService;
-    private final TripServiceImpl tripServiceImpl;
+    private final TripService tripService;
 
     @PostConstruct
     void initData(){
-        CreateUser user1 = CreateUser.builder()
+        CreateUserDto user1 = CreateUserDto.builder()
                 .email("email@gamil.com")
                 .authority("ADMIN")
                 .password("pass")

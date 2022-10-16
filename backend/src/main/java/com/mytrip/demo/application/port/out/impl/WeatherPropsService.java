@@ -1,6 +1,7 @@
-package com.mytrip.demo.application.port.out;
+package com.mytrip.demo.application.port.out.impl;
 
 import com.mytrip.demo.application.persistance.trip.model.event.type.TripEventTypeName;
+import com.mytrip.demo.application.port.out.CreateAdditionalProps;
 import com.mytrip.demo.domain.Event;
 import com.mytrip.demo.infrastructure.weather.WeatherClient;
 import com.mytrip.demo.infrastructure.weather.model.Weather16dayProperties;
@@ -16,7 +17,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class WeatherPropsService implements CreateAdditionalProps {
+class WeatherPropsService implements CreateAdditionalProps {
 
     private static final Set<TripEventTypeName> EVENT_TYPES_WITH_WEATHER =
             Set.of(TripEventTypeName.ACCOMMODATION, TripEventTypeName.TOUR);

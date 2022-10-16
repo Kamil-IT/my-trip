@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class TripServiceImpl implements ParticitableService, TripService {
+class TripServiceImpl implements ParticitableService, TripService {
     private final TripRepository repository;
     private final UserService userService;
 

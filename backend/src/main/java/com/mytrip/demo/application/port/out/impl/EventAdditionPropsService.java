@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class EventAdditionPropsService implements EventAdditionPropsServiceImpl {
+class EventAdditionPropsService implements EventAdditionPropsServiceImpl {
 
     private final List<CreateAdditionalProps> createAdditionalProps;
     private final TripMapper tripMapper;

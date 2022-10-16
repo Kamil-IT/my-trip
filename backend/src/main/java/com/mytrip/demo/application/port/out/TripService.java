@@ -10,16 +10,4 @@ import java.util.UUID;
 
 public interface TripService extends CRUDService<TripJpa, UUID, CreateTripDto, UpdateTripDto> {
     List<TripJpa> getAll(String email);
-
-    TripJpa get(UUID id);
-
-    @Override
-    TripJpa create(CreateTripDto trip);
-
-    @Override
-    void update(UUID id, UpdateTripDto trip);
-
-    @Transactional
-    @Override
-    void delete(UUID id);
 }

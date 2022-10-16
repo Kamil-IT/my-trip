@@ -2,7 +2,7 @@ package com.mytrip.demo.application.port.out;
 
 import javax.transaction.Transactional;
 
-public interface CRUDService<T, ID, CREATE_DTO, UPDATE_DTO> {
+interface CRUDService<T, ID, CREATE_DTO, UPDATE_DTO> {
     T get(ID uuid);
 
     T create(CREATE_DTO event);

@@ -8,6 +8,7 @@ import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJ
 import com.mytrip.demo.application.port.in.trip.model.create.CreateEventDto;
 import com.mytrip.demo.application.port.in.trip.model.update.AddAccommodationDto;
 import com.mytrip.demo.application.port.in.trip.model.update.UpdateEventDto;
+import com.mytrip.demo.application.port.out.EventService;
 import com.mytrip.demo.application.port.out.ParticitableService;
 import com.mytrip.demo.application.port.out.UserService;
 import com.mytrip.demo.infrastructure.geocoding.GeocodingClient;
@@ -21,7 +22,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class EventServiceImpl implements ParticitableService, EventService {
+class EventServiceImpl implements ParticitableService, EventService {
 
     private final TripEventRepository repository;
     private final GeocodingClient geocodingClient;
