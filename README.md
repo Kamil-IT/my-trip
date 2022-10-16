@@ -1,6 +1,6 @@
 # my-trip
 
-# Pre requirements to run:
+# Pre requirements to run
 
 ## Apps needed to be installed
 
