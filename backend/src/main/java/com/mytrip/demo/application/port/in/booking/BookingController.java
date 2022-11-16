@@ -6,6 +6,8 @@ import com.mytrip.demo.infrastructure.booking.model.BookingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin
@@ -15,7 +17,7 @@ public class BookingController {
     private final BookingClient bookingClient;
 
     @PostMapping("hotel")
-    public BookingResponse findHotel(@RequestBody FindHotel findHotel){
+    public BookingResponse findHotel(@Valid @RequestBody FindHotel findHotel){
         return bookingClient.findHotels(findHotel);
     }
 }

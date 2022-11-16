@@ -1,0 +1,67 @@
+@startuml
+'left to right direction
+skinparam actorStyle awesome
+actor User
+'actor clerk
+
+"wish to organize a trip" as (wish)
+"find place to travel" as (place)
+
+
+:User: -|> wish
+wish .> (place)
+place ..> transfer
+
+'Travel
+
+rectangle transfer {
+    "find transfer" as (transfer_find)
+    "check price" as (transfer_check_price)
+
+    transfer_find ..> transfer_check_price
+    transfer_check_price ..> (accommodation)
+
+    transfer_check_price ..> (place) : too expensive
+}
+
+
+'Accommodation
+
+rectangle accommodation {
+    "find accommodation" as (accommodation_find)
+    "check accommodation price" as (accommodation_check_price)
+
+    accommodation_find ..> accommodation_check_price
+    accommodation_check_price ..> (weather)
+
+    accommodation_check_price ..> (place) : too expensive
+}
+
+rectangle weather {
+    "check weather" as (weather_check)
+
+    weather_check ..> (book)
+
+    weather_check ..> (place) : don't fit
+}
+
+rectangle book {
+    "book transfer" as (book_transfer)
+    "book accommodation" as (book_accommodation)
+    "book additional trips in destination" as (book_additional_trips)
+
+    book_transfer ..> book_accommodation
+    book_accommodation ..> book_additional_trips
+}
+
+
+'Check weather
+
+
+'rectangle "Group trip" {
+'  User -- (wish to organize a trip)
+'  (checkout) .> (payment) : include
+'  (help) .> (checkout) : extends
+'  (checkout) -- clerk
+'}
+@enduml
