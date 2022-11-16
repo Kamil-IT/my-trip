@@ -1,28 +1,24 @@
 @startuml
-'left to right direction
+top to bottom direction
+
 skinparam actorStyle awesome
 actor User
 actor Participants
-'actor clerk
 
 "wish to organize a trip" as (wish)
 "find place to travel" as (place)
 
-
-:User: -|> wish
+:User: -r-|> wish
 :User: ---|> book
-wish .> (place)
-place ..> transfer
-
-'Travel
+wish .> place
+place .r.> transfer
 
 rectangle transfer {
     "find transfer" as (transfer_find)
     "check price" as (transfer_check_price)
 
     transfer_find ..> transfer_check_price
-    transfer_check_price ..> (accommodation)
-
+    transfer_check_price .r.> (accommodation)
     transfer_check_price ..> (place) : too expensive
 }
 
@@ -31,8 +27,8 @@ rectangle accommodation {
     "check accommodation price" as (accommodation_check_price)
 
     accommodation_find ..> accommodation_check_price
-    accommodation_check_price ..> (weather)
-    accommodation_check_price ..> (place) : too expensive
+    accommodation_check_price .r.> (weather)
+    accommodation_check_price .d.> (place) : too expensive
 }
 
 rectangle weather {
@@ -45,7 +41,7 @@ rectangle weather {
 rectangle accept {
    "accept trip" as (trip_accept)
 
-   :Participants: -|> trip_accept
+   :Participants: --|> trip_accept
    trip_accept ..> book
 }
 
@@ -54,7 +50,7 @@ rectangle book {
     "book accommodation" as (book_accommodation)
 
     book_transfer ..> book_accommodation
-    book_accommodation ..> "regional trip"
+    book_accommodation .r.> "regional trip"
 }
 
 rectangle "regional trip" {
@@ -62,13 +58,5 @@ rectangle "regional trip" {
 }
 
 
-'Check weather
 
-
-'rectangle "Group trip" {
-'  User -- (wish to organize a trip)
-'  (checkout) .> (payment) : include
-'  (help) .> (checkout) : extends
-'  (checkout) -- clerk
-'}
 @enduml
