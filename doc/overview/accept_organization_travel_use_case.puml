@@ -1,0 +1,28 @@
+@startuml
+'top to bottom direction
+'left to right direction
+'left to right direction
+
+skinparam actorStyle awesome
+actor Participants
+
+rectangle trip {
+
+    rectangle transfer {
+        usecase "accept" as accept_t
+        usecase "regret" as regret_t
+        usecase "provide new" as provide_new_t
+    }
+
+    rectangle accommodation {
+        usecase "accept" as accept_a
+        usecase "regret" as regret_a
+        usecase "provide new" as provide_new_a
+    }
+
+}
+
+:Participants: -d-> transfer
+:Participants: -d-> accommodation
+
+@enduml

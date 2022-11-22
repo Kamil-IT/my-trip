@@ -1,0 +1,18 @@
+@startuml
+top to bottom direction
+
+skinparam actorStyle awesome
+actor "User/Participants" as uspar
+actor "Another User/Participants" as an_uspar
+
+rectangle "regional trip" {
+    "add additional trips in destination" as (book_additional_trips)
+    "accept" as (accept)
+
+    uspar --|> book_additional_trips
+    an_uspar --|> accept
+}
+
+
+
+@enduml

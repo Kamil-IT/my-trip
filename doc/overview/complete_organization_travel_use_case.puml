@@ -1,0 +1,81 @@
+@startuml
+top to bottom direction
+
+skinparam actorStyle awesome
+actor User
+actor Participants
+
+"wish to organize a trip" as (wish)
+"create new trip element" as (wish_element)
+
+:User: -d-|> wish
+wish --> wish_element
+
+rectangle trip {
+    "add accommodation" as (add_accommodation)
+    "add transfer" as (add_transfer)
+    "add regional trip" as (add_regional_trip)
+    usecase "trip elements" as (trip_elements)
+
+    wish_element .d.> add_accommodation
+    wish_element .d.> add_transfer
+    wish_element .d.> add_regional_trip
+
+    add_accommodation .d.> trip_elements : add
+    add_transfer .d.> trip_elements : add
+    add_regional_trip .d.> trip_elements : add
+}
+
+rectangle "trip management" {
+    "accept" as (accept_pr)
+    "regret" as (regret_pr)
+    "provide new" as (provide_new_pr)
+
+    "ask user to participate in trip element" as (participate_in_trip_element)
+'    "transfer participants" as (transfer_participants)
+'    "regional trip participants" as (regional_trip_participants)
+
+'    Participants --[hidden]> accept_pr
+'    Participants --[hidden]> regret_pr
+'    Participants --[hidden]> provide_new_pr
+
+    trip_elements -d-> participate_in_trip_element
+
+    participate_in_trip_element ..> Participants
+
+    participate_in_trip_element --[hidden]> accept_pr
+    participate_in_trip_element --[hidden]> regret_pr
+    participate_in_trip_element --[hidden]> provide_new_pr
+
+    Participants -d-|> provide_new_pr
+    Participants -d-|> accept_pr
+    Participants -d-|> regret_pr
+
+    accept_pr .d.> (Join trip element)
+
+    provide_new_pr --> wish_element
+}
+
+
+'rectangle accept {
+'   "accept trip" as (trip_accept)
+'
+'   :Participants: --|> trip_accept
+'   trip_accept ..> book
+'}
+'
+'rectangle book {
+'    "book transfer" as (book_transfer)
+'    "book accommodation" as (book_accommodation)
+'
+'    book_transfer ..> book_accommodation
+'    book_accommodation .r.> "regional trip"
+'}
+'
+'rectangle "regional trip" {
+'    "book additional trips in destination" as (book_additional_trips)
+'}
+
+
+
+@enduml
