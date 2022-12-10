@@ -1,7 +1,9 @@
 package com.mytrip.demo.application.port.out.impl;
 
 import com.mytrip.demo.application.exception.ResourceNotFoundException;
-import com.mytrip.demo.application.persistance.user.*;
+import com.mytrip.demo.application.persistance.user.UserEventParticipantRepository;
+import com.mytrip.demo.application.persistance.user.UserRepository;
+import com.mytrip.demo.application.persistance.user.UserTripParticipantRepository;
 import com.mytrip.demo.application.persistance.user.model.UserEventParticipantsJpa;
 import com.mytrip.demo.application.persistance.user.model.UserJpa;
 import com.mytrip.demo.application.persistance.user.model.UserTripParticipantsJpa;
@@ -16,7 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

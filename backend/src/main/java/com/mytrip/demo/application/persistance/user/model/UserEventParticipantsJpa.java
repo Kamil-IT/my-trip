@@ -1,14 +1,21 @@
 package com.mytrip.demo.application.persistance.user.model;
 
 import com.mytrip.demo.application.persistance.trip.model.event.TripEventJpa;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Getter
