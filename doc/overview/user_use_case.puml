@@ -1,0 +1,54 @@
+@startuml
+top to bottom direction
+
+skinparam actorStyle awesome
+actor "future user" as fu
+actor Administrator
+
+(chose which account type) as chose_which_user
+rectangle "account manager" as am {
+}
+(reject account request) as reject_account_request
+(create account automatically) as create_account_automatically
+
+
+fu -d-> chose_which_user
+
+(user account) as user_account
+(administrator account) as administrator_account
+
+chose_which_user -d-> user_account
+chose_which_user -d-> administrator_account
+
+administrator_account -d-> Administrator : contact
+Administrator -d-> (create account)
+Administrator -u-> reject_account_request
+reject_account_request -u-> fu : inform
+
+user_account -d-> create_account_automatically
+
+create_account_automatically -d-> am
+(create account) -d-> am
+
+'rectangle accept {
+'   "accept trip" as (trip_accept)
+'
+'   :Participants: --|> trip_accept
+'   trip_accept ..> book
+'}
+'
+'rectangle book {
+'    "book transfer" as (book_transfer)
+'    "book accommodation" as (book_accommodation)
+'
+'    book_transfer ..> book_accommodation
+'    book_accommodation .r.> "regional trip"
+'}
+'
+'rectangle "regional trip" {
+'    "book additional trips in destination" as (book_additional_trips)
+'}
+
+
+
+@enduml

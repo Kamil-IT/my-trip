@@ -1,0 +1,16 @@
+@startjson
+{
+    "email": "email@gamil.com",
+    "password": "$2a$10$SK9Oplk5AWK.VpeT/UwFluf22YmMhVfLMEXBmw9aoKnEGGeuu0Sx.",
+    "authorities": [
+        {
+            "authority": "ADMIN"
+        }
+    ],
+    "accountNonExpired": false,
+    "accountNonLocked": false,
+    "credentialsNonExpired": false,
+    "enabled": false,
+    "username": "email@gamil.com"
+}
+@endjson

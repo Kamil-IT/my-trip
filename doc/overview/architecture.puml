@@ -1,0 +1,23 @@
+@startuml
+
+package "external services" {
+    usecase [Rapid API Hub (proxy)] as rapid_hub
+    [Weather API] .d. rapid_hub
+    [Geocode API] .d. rapid_hub
+    [Hotel API] .d. rapid_hub
+}
+
+[backend] as backend
+[frontend] as frontend
+
+backend .u. rapid_hub
+frontend .u. backend
+
+
+backend .r. mysql
+
+database "database" as mysql {
+    [database instance]
+}
+
+@enduml

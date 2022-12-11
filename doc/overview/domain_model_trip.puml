@@ -1,0 +1,118 @@
+@startjson
+{
+            "uuid": "2c7b1c74-dff6-47cb-a4ca-c5132fd6813a",
+            "title": "title",
+            "creatorEmail": "email@gamil.com",
+            "from": "2022-12-11",
+            "to": "2022-12-18",
+            "participantsEmails": [
+                "email@gamil.com"
+            ],
+            "events": [
+                {
+                    "uuid": "337df063-320b-46b2-bb1d-0c66e7a10886",
+                    "title": "Accomodation",
+                    "from": "2022-12-11",
+                    "to": "2022-12-16",
+                    "location": {
+                        "latitude": 2.1774322,
+                        "longitude": 41.3828939,
+                        "locationDescription": "Barcelona, Barcelonès, Barcelona, Catalunya, 08001, España"
+                    },
+                    "creatorEmail": "email@gamil.com",
+                    "eventType": "Accommodation",
+                    "properties": [
+                        {
+                            "key": "weather_2",
+                            "value": "22.9-33.4"
+                        },
+                        {
+                            "key": "weather_1",
+                            "value": "22.8-33.0"
+                        },
+                        {
+                            "key": "hotelRating",
+                            "value": "9/10"
+                        },
+                        {
+                            "key": "weather_0",
+                            "value": "23.4-33.1"
+                        },
+                        {
+                            "key": "hotelPhotoUrl",
+                            "value": "www.hotel.com/hotel/photo"
+                        },
+                        {
+                            "key": "hotelAddress",
+                            "value": "Ramón Turró 169-B, Barcelona, 08034"
+                        },
+                        {
+                            "key": "hotelName",
+                            "value": "Acta Voraport"
+                        },
+                        {
+                            "key": "weather_3",
+                            "value": "23.3-33.5"
+                        }
+                    ],
+                    "participants": [
+                        "email@gamil.com"
+                    ]
+                },
+                {
+                    "uuid": "bfd5d9a8-20ee-400a-82a3-f85441e03cf4",
+                    "title": "Tour",
+                    "from": "2022-12-11",
+                    "to": "2022-12-17",
+                    "location": {
+                        "latitude": 2.1774322,
+                        "longitude": 41.3828939,
+                        "locationDescription": "Barcelona, Barcelonès, Barcelona, Catalunya, 08001, España"
+                    },
+                    "creatorEmail": "email@gamil.com",
+                    "eventType": "Tour",
+                    "properties": [
+                        {
+                            "key": "weather_2",
+                            "value": "22.9-33.4"
+                        },
+                        {
+                            "key": "weather_1",
+                            "value": "22.8-33.0"
+                        },
+                        {
+                            "key": "weather_0",
+                            "value": "23.4-33.1"
+                        },
+                        {
+                            "key": "weather_4",
+                            "value": "23.5-33.3"
+                        },
+                        {
+                            "key": "weather_3",
+                            "value": "23.3-33.5"
+                        }
+                    ],
+                    "participants": [
+                        "email@gamil.com"
+                    ]
+                },
+                {
+                    "uuid": "8007aa66-bbcc-4de9-b601-dce962cad995",
+                    "title": "Transfer",
+                    "from": "2022-12-11",
+                    "to": "2022-12-17",
+                    "location": {
+                        "latitude": 17.0326689,
+                        "longitude": 51.1089776,
+                        "locationDescription": "Wrocław, województwo dolnośląskie, 50-001, Polska"
+                    },
+                    "creatorEmail": "email@gamil.com",
+                    "eventType": "Transfer",
+                    "participants": [
+                        "email@gamil.com"
+                    ]
+                }
+            ]
+}
+@endjson

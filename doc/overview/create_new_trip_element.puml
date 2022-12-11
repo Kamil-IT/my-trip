@@ -1,9 +1,7 @@
 @startuml
-'top to bottom direction
 skinparam actorStyle awesome
 
-actor User
-actor Participants
+actor "User/Participant" as User
 
 (new trip element created) as new_trip_element
 
@@ -15,54 +13,36 @@ rectangle "create new trip element" as cnte {
     "check price" as (check_price)
     "check dates" as (check_dates)
 
-    wish <|-u- User
+    User -d-|> wish
 
-    transfer <-u- wish : create transfer
-    accommodation <-u- wish: create accommodation
-    regional_trip <-u- wish : create regional trip
+    wish -d-> transfer : create transfer
+    wish -d-> accommodation: create accommodation
+    wish -d-> regional_trip : create regional trip
 
     rectangle transfer {
         "find transfer" as (transfer_find)
-        "check dates" as (transfer_check_dates)
-        "check price" as (transfer_check_price)
 
-        transfer_find .d.> transfer_check_price
-        transfer_check_price .u.> wish : too expensive
-        transfer_check_price .d.> transfer_check_dates
-        transfer_check_dates .u.> wish : dates not in trip dates
-        transfer_check_dates .d.> new_trip_element
+        transfer_find .d.> check_price
     }
 
     rectangle accommodation {
         "find accommodation" as (accommodation_find)
-        "check dates" as (accommodation_check_dates)
-        "check price" as (accommodation_check_price)
 
-        accommodation_find .d.> accommodation_check_price
-        accommodation_find ..> check_weather
-        accommodation_check_price .u.> wish : too expensive
-        accommodation_check_price .d.> accommodation_check_dates
-        accommodation_check_dates .u.> wish : dates not in trip dates
-        accommodation_check_dates .d.> new_trip_element
+        accommodation_find .d.> check_weather
     }
 
     rectangle "regional trip" as regional_trip {
         "find transfer" as (regional_find)
-        "check dates" as (regional_check_dates)
-        "check price" as (regional_check_price)
 
-        regional_find .d.> regional_check_price
-        regional_find ..> check_weather
-        regional_check_price .u.> wish : too expensive
-        regional_check_price .d.> regional_check_dates
-        regional_check_dates .u.> wish : dates not in trip dates
-        regional_check_dates .d.> new_trip_element
+        regional_find .d.> check_weather
     }
 
     check_price .u.> wish : too expensive
     check_price .d.> check_dates
     check_dates .u.> wish : dates not in trip dates
     check_weather .u.> wish : don't fit
+    check_weather .d.> check_price
+    check_dates .d.> new_trip_element
 
 }
 

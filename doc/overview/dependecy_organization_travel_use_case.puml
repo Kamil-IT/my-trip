@@ -1,0 +1,34 @@
+@startjson
+{
+    "trip":
+        {
+            "title": "title",
+            "from": "YYYY-MM-DD",
+            "to": "YYYY-MM-DD",
+            "events": [
+                {
+                    "<color:red><b>type": "<color:red><b>Accommodation",
+                    "title": "title",
+                    "from": "YYYY-MM-DD",
+                    "to": "YYYY-MM-DD",
+                    "location": "location",
+                    "place": "place to stay"
+                },
+                {
+                    "<color:red><b>Type": "<color:red><b>Transfer",
+                    "title": "title",
+                    "from": "YYYY-MM-DD",
+                    "to": "YYYY-MM-DD",
+                    "location": "location"
+                },
+                {
+                    "<color:red><b>Type": "<color:red><b>Tour",
+                    "title": "title",
+                    "from": "YYYY-MM-DD",
+                    "to": "YYYY-MM-DD",
+                    "location": "location"
+                }
+            ]
+        }
+}
+@endjson
